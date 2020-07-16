@@ -21,7 +21,7 @@ Route::group(['prefix'=>'product'],function(){
 	Route::post('/search','HomeController@search');
 });
 
-
+Route::post('shoppingcart/add/{id}','HomeController@add');
 /* Login */
 Route::get('login','LoginController@Login');
 Route::post('login','LoginController@postLogin');
@@ -52,3 +52,8 @@ Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
 	});
 });
 
+Route::group(['prefix'=>'shoppingcart'],function(){
+	Route::get('/list','ShoppingCartController@index');
+	Route::get('/delete/{rowId}','ShoppingCartController@delete');
+	Route::post('/update/{rowId}','ShoppingCartController@update');
+});

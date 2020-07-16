@@ -51,7 +51,8 @@
 
 			</div>
 			<div class="col-md-7" style="padding-left: 50px">
-				<form action="" method="POST">
+				<form action="{{url('shoppingcart/add/'.$detail->MaSanPham)}}" method="POST">
+					{{ csrf_field() }}
 					<h3 class="product-title">{!! $detail->TenSanPham !!}</h3>
 					<p class="product-description">
 						<i class="fas fa-star"></i>
@@ -69,7 +70,7 @@
 						<i class="fa fa-check-circle"></i>Tặng gói bảo hiểm rơi vỡ trong 6 tháng <br>
 						<i class="fa fa-check-circle"></i>Gói quà tặng Galaxy xem phim & uống cafe cuối tuần
 					</p>
-					<button class="btn btn-primary" type="button">Buy now</button>
+					
 
 					<input type="hidden" name="name" value="{!! $detail->TenSanPham !!}" />
 

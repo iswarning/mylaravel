@@ -11,6 +11,7 @@ use Redirect;
 use Auth;
 use Str;
 use Form;
+use Cart;
 class HomeController extends Controller
 {
 	public function Home()
@@ -53,4 +54,18 @@ class HomeController extends Controller
 		$cate = Product::where('MaLoai','=',$id)->get();
 		return view('product.cate',compact('cate'));
 	}
+
+	public function add($id)
+    {
+    	$data = Product::where('MaSanPham',$id)->first();
+    	$cart=Cart::add([
+    		'id' => $id, 
+    		'name' => $data->TenSanPham, 
+    		'qty' => 1, 
+    		'price' => $data->Gia,
+    		'weight' => 550, 
+    		'options' => ['img' => $data->HinhAnh]
+    	]);
+    	return back();   	
+    }
 }

@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use DB;
 use App\TypeProduct;
 use App\Product;
+use Cart;
 class AppServiceProvider extends ServiceProvider
 {
     /**

@@ -56,11 +56,11 @@
               </li>
             @endif
           <li class="nav-item">
-            <a class="nav-link" href="index.php?c=cart&a=listCart"><i class="fa fa-shopping-cart" style="font-size: 15px;"></i></a>
+            <a class="nav-link" href="{{url('shoppingcart/list')}}"><i class="fa fa-shopping-cart" style="font-size: 15px;"></i></a>
           </li>
           <li class="nav-item" style="padding-left: 0px">
             <span style="width: 5px; height: 5px; border-radius: 1px; background-color: green;color: white;">
-              
+              {{Cart::count()}}
             </span>
           </li>
         </ul>
