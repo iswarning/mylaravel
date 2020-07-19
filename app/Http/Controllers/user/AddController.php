@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use Redirect;
+use Hash;
 class AddController extends Controller
 {
 	public function add(){
@@ -30,7 +31,7 @@ class AddController extends Controller
     	$data = User::create([
     		'name' => $request->name,
     		'email' => $request->email,
-    		'password' => $request->pass
+    		'password' => Hash::make($request->pass)
     	]);
 
     	if($data){

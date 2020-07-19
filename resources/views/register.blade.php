@@ -77,16 +77,23 @@
 <form method="POST" action=""> 
   {!! csrf_field() !!}
   <div class="container">
-    <h1>Sign In</h1>
-    <hr> 
+    <h1>Sign Up</h1>
+    <hr>
 
     <label for="username"><b>Email</b></label>
-    <input type="text" placeholder="Enter Username" name="email" required>
+    <input type="text" placeholder="Enter Email" name="email" required>
+
+    <label for="username"><b>Name</b></label>
+    <input type="text" placeholder="Enter Name" name="text" required>
 
     <label for="psw"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="password" required>
-    <a href="{{url('register')}}">Sigh Up</a>
-    <button type="submit" name="login" class="registerbtn">Sign In</button>
+
+    <label for="psw"><b>Re-password</b></label>
+    <input type="password" placeholder="Enter Re-password" name="repassword" required>
+
+    <a href="{{url('login')}}">Sigh In</a>
+    <button type="submit" name="register" class="registerbtn">Sign Up</button>
   </div>
 
 </form>

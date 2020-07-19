@@ -46,9 +46,15 @@
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý đơn hàng">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="{{asset('admin/order')}}">
             <i class="fa fa-fw fa-university"></i>
             <span class="nav-link-text"> Order </span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý đơn hàng">
+          <a class="nav-link" href="{{asset('admin/orderdetail')}}">
+            <i class="fa fa-fw fa-university"></i>
+            <span class="nav-link-text"> Order Detail </span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý tài khoản">
@@ -170,7 +176,17 @@
 </nav>
 	
 	@yield('content')
-
+    <script type="text/javascript">
+      function ConfirmDelete()
+      {
+          var check = confirm('Do you want delete ?');
+          if(check == true){
+            return true;
+          }else{
+            return false;
+          }
+      }
+    </script>
 	<!-- Bootstrap core JavaScript-->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

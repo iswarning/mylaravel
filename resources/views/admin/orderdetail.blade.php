@@ -4,6 +4,8 @@
 
 <head>
   <title>SB Admin - Start Bootstrap Template</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
 </head>
 <body>
   <!-- Navigation-->
@@ -16,43 +18,45 @@
         <li class="breadcrumb-item">
           <a href="#">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">My Dashboard</li>
+        <li class="breadcrumb-item active">Comments</li>
       </ol>
       
       <!-- Example DataTables Card-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> Data Table Example</div>
+          <i class="fa fa-table"></i> Order Data Table</div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Password</th>
+                  <th>Order_id</th>
+                  <th>Product_id</th>
+                  <th>Product_name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>OrderDate</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-              	@foreach($data as $row)
+                @foreach($order as $o)
                 <tr>
-                  <td>{{$row->id}}</td>
-                  <td>{{$row->name}}</td>
-                  <td>{{$row->email}}</td>
-                  <td>{{$row->password}}</td>
-                  <td>
-                    <a href="user/edit/{{$row->id}}">Edit</a>/<a href="user/delete/{{$row->id}}" onclick="return ConfirmDelete();">Delete</a></td>
-                  </tr>
+                  <td>{{$o->id}}</td>
+                  <td>{{$o->order_id}}</td>
+                  <td>{{$o->product_id}}</td>
+                  <td>{{$o->product_name}}</td>
+                  <td>{{number_format($o->price)}}</td>
+                  <td>{{$o->quantity}}</td>
+                  <td>{{$o->created_at->format('d/m/Y')}}</td>
+                  <td><a href="{{url('admin/orderdetail/delete/'.$o->id)}}">Delete</a></td>                
+                </tr>
                 @endforeach
-         		</tbody>
+            </tbody>
             </table>
-            <div>
-            	<a href="{{asset('admin/user/add')}}">Add Users</a>
-            </div>
             <div style="float: right;">
-            	{{ $data->links() }}
+              {{ $order->links() }}
             </div>
           </div>
         </div>
@@ -93,6 +97,7 @@
     
   </div>
   @endsection
+
 </body>
 
 </html>

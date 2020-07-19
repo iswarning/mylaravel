@@ -1,13 +1,10 @@
 @extends('layout.master')
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@section('title','Shopping Cart')</title>
+  @section('link')
+	   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	  <meta name="description" content="">
 	  <meta name="author" content="">
-	  <title>SB Admin - Start Bootstrap Template</title>
 	  <!-- Bootstrap core CSS-->
 	  <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 	  <!-- Custom fonts for this template-->
@@ -18,8 +15,8 @@
 	  <link href="{{ asset('css/sb-admin.css')}}" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
-<body>
+    @endsection
+
 	@section('content')
 	<div class="card mb-3" style="margin-top: 100px;">
         <div class="card-header">
@@ -43,9 +40,10 @@
               <tbody>
               	
               	@foreach($cart as $c)
-                <form method="POST" action="{{url('shoppingcart/update/'.$c->rowId)}}">
-                  {{csrf_field()}}
-              	<tr>
+                  
+              	<form method="POST" action="{{url('shoppingcart/update/'.$c->rowId)}}">
+                {{csrf_field()}}
+                <tr>
               		<td><p name='idpro'>{{$c->id}}</p></td>
               		<td><img src="{{asset($c->options->img)}}" width="40px" height="40px"></td>
               		<td>{{$c->name}}</td>
@@ -56,26 +54,18 @@
               			<button type="submit" class="btn btn-link" id="up">Update</button>/
               			<a href="{{url('shoppingcart/delete/'.$c->rowId)}}">Delete</a>
               		</td>
-              		<input type="hidden" name="rowId" value="{{$c->rowId}}">
+              		<input type="hidden" name="rowId" id="rowId" value="{{$c->rowId}}">
               	</tr>
-                </form>
-                <script type="text/javascript">
-                    $('#up').click(function(){
-                      $.ajax({
-                        url:"{{url('shoppingcart/update/'.$c->rowId)}}",
-                        method:'post',
-                        data: {_token: '{{ csrf_token() }}'},
-                        success:function(){
-                          window.location.reload();
-                        }
-                      });
-                    });
-                </script>
+              </form>
               	@endforeach 
 
             </tbody>
             </table>
-            <button type="submit" class="btn btn-primary">Order</button>
+            <div class="form-group" style="float: right;">
+              <label style="font-size: 20px;color: red;">Total: </label>
+              <span> {{Cart::priceTotal()}} </span>
+            </div>
+            <a href="{{url('order')}}"> Order </a>
         
             
           </div>
@@ -83,5 +73,16 @@
       </div>
       @endsection
       !-- Bootstrap core JavaScript-->
-</body>
-</html>
+
+      @section('script')
+        <script type="text/javascript">
+          $(document).ready(function(){
+            $('#up').on('click',function(){
+              var  row = $('#rowId').val();
+              $.post('shoppingcart/update/'+row,function(data){
+                $('#qty').html(data);
+              });
+            });
+          });
+        </script>
+      @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use Hash;
 class LoginController extends Controller
 {
 
@@ -30,5 +31,28 @@ class LoginController extends Controller
     	}
     }
 
+    public function logout(){
+        Auth::logout();
+        return redirect()->guest('home');
+    }
+
+    public function register(){
+        return view('register');
+    }
+
+    public function postRegister(Request $request)
+    {
+        if($request->repassword != $request->password){
+            return back()->with('<script>alert("Password invalid")</script>');
+        }
+
+        $register = new User();
+        $register->name = $request->text;
+        $register->email = $request->email;
+        $register->password = Hash::make($request->password);
+        $register->save();
+
+        return view('login');
+    }
     
 }

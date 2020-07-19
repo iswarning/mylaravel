@@ -12,5 +12,10 @@ class UserController extends Controller
 		$data = User::paginate(5); 
 	    return view('admin.user',compact('data'));
 	}
-    
+    public function delete($id)
+    {
+    	$data= User::find($id);
+    	$data->delete();
+    	return back();
+    }
 }

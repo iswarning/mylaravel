@@ -21,11 +21,13 @@ Route::group(['prefix'=>'product'],function(){
 	Route::post('/search','HomeController@search');
 });
 
-Route::post('shoppingcart/add/{id}','HomeController@add');
+
 /* Login */
 Route::get('login','LoginController@Login');
 Route::post('login','LoginController@postLogin');
-Route::get('logout','LogoutController@logout');
+Route::get('logout','LoginController@logout');
+Route::get('register','LoginController@register');
+Route::post('register','LoginController@postRegister');
 
 
 /* Admin System */
@@ -44,16 +46,31 @@ Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
 		Route::post('/edit/{id}','user\EditController@postEdit');
 		Route::get('/add','user\AddController@add');
 		Route::post('/add','user\AddController@postAdd');
-		Route::get('/delete/{id}','user\DeleteController@delete');
+		Route::get('/delete/{id}','UserController@delete');
 	});
 	Route::group(['prefix'=>'comment'],function(){
 		Route::get('/','CommentController@index');
 		Route::get('/delete/{id}','CommentController@delete');
 	});
+	Route::group(['prefix'=>'order'],function(){
+		Route::get('/','OrderController@orderAdmin');
+		Route::get('/delete/{id}','OrderController@deleteOrder');
+	});
+	Route::group(['prefix'=>'orderdetail'],function(){
+		Route::get('/','OrderController@orderdetailAdmin');
+		Route::get('/delete/{id}','OrderController@deleteOrderDetail');
+	});
 });
 
-Route::group(['prefix'=>'shoppingcart'],function(){
+Route::group(['prefix'=>'shoppingcart','middleware'=>'guest'],function(){
+	Route::post('/add/{id}','HomeController@add');
 	Route::get('/list','ShoppingCartController@index');
 	Route::get('/delete/{rowId}','ShoppingCartController@delete');
 	Route::post('/update/{rowId}','ShoppingCartController@update');
 });
+
+Route::group(['middleware'=>'guest'],function(){
+	Route::get('order','OrderController@index');
+	Route::post('order','OrderController@newOrder');
+});
+

@@ -96,9 +96,10 @@
               <div class="gtco-text">
                 <h2>{!! $row->TenSanPham !!}</h2>
                 <p>{!! number_format($row->Gia) !!}đ</p>
-                <span class="btn btn-info">Xem chi tiết</span>
+                <span class="btn btn-info">Xem chi tiết </span>
               </div>
             </a>
+            
         </div>
 
         @endforeach

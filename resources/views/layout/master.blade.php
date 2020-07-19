@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>@yield('title')</title>
+	@yield('link')
 </head>
 <body>
 
@@ -10,5 +11,7 @@
 	@yield('content')
 
 	This is footer
+
+	@yield('script')
 </body>
 </html>
