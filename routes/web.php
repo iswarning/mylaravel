@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/home','HomeController@Home')->name('home');
 Route::group(['prefix'=>'product'],function(){
 	Route::get('/detail/{id}','HomeController@detail');
-	Route::post('/detail/{id}','HomeController@comment');
+	Route::post('/detail/{id}','HomeController@comment')->middleware('guest');
 	Route::get('/cate/{id}','HomeController@cate');
 	Route::post('/search','HomeController@search');
 });

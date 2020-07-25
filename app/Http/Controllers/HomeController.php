@@ -12,34 +12,34 @@ use Auth;
 use Str;
 use Form;
 use Cart;
+use Carbon\Carbon;
+use App\Slide;
 class HomeController extends Controller
 {
 	public function Home()
-	{		
+	{
 		$index = Product::all();
-		$menu = TypeProduct::all();		
-    	return view('layout.default',compact('index','menu'));
+		$menu = TypeProduct::all();
+		$slide = Slide::all();
+    	return view('layout.default',compact('index','menu','slide'));
 	}
 
 	public function search(Request $request){
 		$search = Product::where('TenSanPham','REGEXP',$request->textsearch)->get();
 		return view('product.search',compact('search'));
 	}
-	
+
 	public function detail($id)
 	{
 		$detail = Product::where('MaSanPham',$id)->first();
-		$comment = Comment::where('id_product',$id)->orderBy('id','DESC')->get();
+		$comment = Comment::where('id_product',$id)->orderBy('created_at','DESC')->paginate(5);
 		return view('product.detail',compact('detail','comment'));
 	}
 
 	public function comment(Request $request, $id)
 	{
-		if(!Auth::check())
-			$email_user = "guest_".Str::random(7);
-		else
-			$email_user = Auth::user()->email;
 
+		$email_user = Auth::user()->email;
 		$newComment = new Comment();
 		$newComment['content'] = $request->content;
 		$newComment['id_product'] = $request->id;
@@ -47,7 +47,7 @@ class HomeController extends Controller
 		$newComment->save();
 
 		return Redirect::back();
-		
+
 	}
 
 	public function cate($id){
@@ -59,13 +59,13 @@ class HomeController extends Controller
     {
     	$data = Product::where('MaSanPham',$id)->first();
     	$cart=Cart::add([
-    		'id' => $id, 
-    		'name' => $data->TenSanPham, 
-    		'qty' => 1, 
+    		'id' => $id,
+    		'name' => $data->TenSanPham,
+    		'qty' => 1,
     		'price' => $data->Gia,
-    		'weight' => 550, 
+    		'weight' => 550,
     		'options' => ['img' => $data->HinhAnh]
     	]);
-    	return back();   	
+    	return back();
     }
 }

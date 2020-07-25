@@ -4,32 +4,32 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <a  href="{{ route('home')}}" class="navbar-brand"><img src="{{ asset('image/logo4.png')}}" width="200px" height="50px"></a>
-      <div class="collapse navbar-collapse" id="nav-content">   
+      <div class="collapse navbar-collapse" id="nav-content">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link active" href="{{ route('home')}}"> Home </a>
           </li>
-        @foreach($menu as $menu)	
+        @foreach($menu as $menu)
           <li class="nav-item">
             <a class="nav-link active" href="product/cate/{!! $menu->id !!}"> {!! $menu->name !!} </a>
           </li>
           @endforeach
-          
+
 
 
         <form class="form-inline my-2 my-lg-0 mr-lg-2" method="POST" action="{{asset('product/search')}}">
           {!! csrf_field() !!}
-          <li class="nav-item">            
+          <li class="nav-item">
               <div class="input-group">
                 <ul>
                   <li>
-                    <input id="timkiem" class="form-control" type="text" placeholder="Search for..." name="textsearch">                  
+                    <input id="timkiem" class="form-control" type="text" placeholder="Search for..." name="textsearch">
                   </li>
-                    
-                
+
+
                 </ul>
 
-              </div>      
+              </div>
           </li>
           <li class="nav-item">
             <span class="input-group-append">
@@ -38,8 +38,8 @@
           </li>
         </form>
 
-            
-              
+
+
             @if(!Auth::check())
               <li class="nav-item">
                 <a class="nav-link" href="#">Đăng ký</a>
@@ -47,7 +47,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="{{asset('login')}}">Đăng nhập</a>
               </li>
-            @else 
+            @else
               <li class="nav-item">
                 <a class="nav-link" href="">Profile</a>
               </li>
@@ -64,5 +64,5 @@
             </span>
           </li>
         </ul>
-      </div>      
+      </div>
   </nav>

@@ -238,9 +238,11 @@
 								<img src="image/avt.png" class="media-photo img-circle" width="64px" height="64px">
 							</a>
 							<div class="media-body">
-								<span class="media-meta pull-right">{!! $c->created_at !!}</span>
+								<span class="media-meta pull-right">
+									{!! Carbon\Carbon::parse($c->created_at)->diffForHumans() !!}
+								</span>
 								<h4 class="title">
-									{!! $c->email_user !!}
+									{!! Auth::user()->name !!}
 								</h4>
 								<p class="summary">{!! $c->content !!}</p>
 							</div>
