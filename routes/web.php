@@ -31,7 +31,7 @@ Route::post('register','LoginController@postRegister');
 
 
 /* Admin System */
-Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){	
+Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
 	Route::get('dashboard','DashBoardController@index');
 	Route::group(['prefix'=>'product'],function(){
 		Route::get('/edit/{id}','product\EditController@edit');
@@ -74,3 +74,4 @@ Route::group(['middleware'=>'guest'],function(){
 	Route::post('order','OrderController@newOrder');
 });
 
+Route::view('/api/test','vue');
