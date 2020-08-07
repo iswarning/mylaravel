@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
-use Hash;
+use Hash, Socialite;
 class LoginController extends Controller
 {
 
@@ -54,5 +54,27 @@ class LoginController extends Controller
 
         return view('login');
     }
-    
+
+    public function redirect($provider){
+        return Socialite::driver($provider)->redirect();
+    }
+
+    public function callback($provider){
+        $getInfo = Socialite::driver($provider)->user();
+        $user = $this->createUser($getInfo,$provider);
+        auth()->login($user);
+        return redirect()->to('/home');
+    }
+    function createUser($getInfo,$provider){
+        $user = User::where('provider_id',$getInfo->id)->first();
+        if(!$user){
+            $user = new User();
+            $user->name = $getInfo->name;
+            $user->email = $getInfo->email;
+            $user->provider = $provider;
+            $user->provider_id = $getInfo->id;
+            $user->save();
+        }
+        return $user;
+    }
 }

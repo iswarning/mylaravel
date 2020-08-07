@@ -25,6 +25,11 @@ Route::group(['prefix'=>'product'],function(){
 /* Login */
 Route::get('login','LoginController@Login');
 Route::post('login','LoginController@postLogin');
+
+/* Facebook Login */
+Route::get('login/redirect/{provider}','LoginController@redirect');
+Route::get('login/callback/{provider}','LoginController@callback');
+
 Route::get('logout','LoginController@logout');
 Route::get('register','LoginController@register');
 Route::post('register','LoginController@postRegister');
@@ -75,3 +80,4 @@ Route::group(['middleware'=>'guest'],function(){
 });
 
 Route::view('/api/test','vue');
+Route::get('getKeySearch/{key}','HomeController@liveSearch');

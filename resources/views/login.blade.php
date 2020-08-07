@@ -74,11 +74,11 @@
 </head>
 <body>
 
-<form method="POST" action=""> 
+<form method="POST" action="">
   {!! csrf_field() !!}
   <div class="container">
     <h1>Sign In</h1>
-    <hr> 
+    <hr>
 
     <label for="username"><b>Email</b></label>
     <input type="text" placeholder="Enter Username" name="email" required>
@@ -87,6 +87,7 @@
     <input type="password" placeholder="Enter Password" name="password" required>
     <a href="{{url('register')}}">Sigh Up</a>
     <button type="submit" name="login" class="registerbtn">Sign In</button>
+    <a href="{{ url('/login/redirect/facebook') }}">FaceBook</a>
   </div>
 
 </form>

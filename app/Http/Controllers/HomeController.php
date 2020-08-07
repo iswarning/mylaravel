@@ -69,4 +69,21 @@ class HomeController extends Controller
     	return back();
     }
 
+    public function liveSearch(Request $request){
+        if($request->ajax()){
+            $search = '';
+            $data = Product::where('TenSanPham','REGEXP',$request->search)->get();
+            if($data){
+                foreach($data as $pros){
+                    $search .= '<tr>
+                    <td>' . $pros->MaSanPham . '</td>
+                    <td>' . $pros->TenSanPham . '</td>
+                    <td>' . $pros->MoTa . '</td>
+                    <td>' . $pros->Gia . '</td>
+                    </tr>';
+                }
+            }
+            return Response($search);
+        }
+    }
 }
