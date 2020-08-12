@@ -38,7 +38,6 @@ class AppServiceProvider extends ServiceProvider
             $index = Product::all();
             $view->with('index',$index);
         });
-
         
     }
 }

@@ -67,6 +67,7 @@ Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
 	});
 });
 
+/* Shopping Cart */
 Route::group(['prefix'=>'shoppingcart','middleware'=>'guest'],function(){
 	Route::post('/add/{id}','HomeController@add');
 	Route::get('/list','ShoppingCartController@index');
@@ -74,10 +75,17 @@ Route::group(['prefix'=>'shoppingcart','middleware'=>'guest'],function(){
 	Route::post('/update/{rowId}','ShoppingCartController@update');
 });
 
+/* Order Detail */
 Route::group(['middleware'=>'guest'],function(){
 	Route::get('order','OrderController@index');
 	Route::post('order','OrderController@newOrder');
 });
 
+
+/* Test Vue */
 Route::view('/api/test','vue');
 Route::get('getKeySearch/{key}','HomeController@liveSearch');
+
+/* Message Box */
+Route::get('messages','ChatController@getMessage');
+Route::post('messages','ChatController@sendMessage');

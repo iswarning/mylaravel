@@ -5,14 +5,12 @@
 	@yield('link')
 </head>
 <body>
-<div id="app">
 	@include('layout.menu')
 
 	@yield('content')
 
 	This is footer
 
-</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $('#timkiem').on('keyup',function(){

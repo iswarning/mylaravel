@@ -55,10 +55,12 @@ class LoginController extends Controller
         return view('login');
     }
 
+    // Login with FaceBook
     public function redirect($provider){
         return Socialite::driver($provider)->redirect();
     }
 
+    
     public function callback($provider){
         $getInfo = Socialite::driver($provider)->user();
         $user = $this->createUser($getInfo,$provider);

@@ -66,17 +66,4 @@
         </ul>
       </div>
   </nav>
-  <br><br><br><br><br>
-  <p>Data: </p>
-  <div id="data">
-    @if ($data)
-        @foreach ($data as $prost)
-            <tr>
-                <td>{{$prost->MaSanPham}}</td>
-                <td>{{$prost->TenSanPham}}</td>
-                <td>{{$prost->MoTa}}</td>
-                <td>{{$prost->Gia}}</td>
-            </tr>
-        @endforeach
-    @endif
-  </div>
+

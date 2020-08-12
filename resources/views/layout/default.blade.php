@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
+    
     <!-- jQuery library -->
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
 
@@ -21,6 +21,8 @@
     <script src="js/bootstrap-datepicker.min.js"></script>
 
     <link href="css/sb-admin.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
     <base href="{{asset('')}}">
 @endsection
 
