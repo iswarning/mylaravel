@@ -1,69 +1,76 @@
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
+        <div class="container">
+      <a class="navbar-brand" href="{{ url('home')}}" >
+        <img src="{{ asset('image/logo4.png')}}" alt="Logo" width="200px" height="50px">
+      </a>
+      <ul class="navbar-nav">
+        @if(!Auth::check())
+        <li class="nav-item">
+           <a class="nav-link" href="{{ url('login')}}"> Login </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url('register')}}"> Register </a>
+        </li>
 
-<nav class="navbar navbar-expand-sm bg-dark fixed-top navbar-dark">
-      <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a  href="{{ route('home')}}" class="navbar-brand"><img src="{{ asset('image/logo4.png')}}" width="200px" height="50px"></a>
-      <div class="collapse navbar-collapse" id="nav-content">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active" href="{{ route('home')}}"> Home </a>
-          </li>
+        @else
+        <li class="nav-item">
+           <a class="nav-link" href="{{ url('logout')}}"> Logout </a>
+        </li>
+
+        @endif
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url('shoppingcart/list')}}">Shopping Cart({{Cart::count()}})</a>
+        </li>
+        <li class="nav-item">
+
+        </li>
+      </ul>
+        </div>
+    </nav>
+@if(\Route::current()->getName() == "home")
+  <div id="demo" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        @foreach($slide as $s)
+        <div class="carousel-item
+          <?php if($s->id == 1) echo 'active'; ?>
+        ">
+          <a  href="#"><img class="img-fluid" src="{{asset($s->src)}}" alt="{{$s->alt}}" width="100%" height="100%"></a>
+        </div>
+        @endforeach
+
+        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#demo" data-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </a>
+      </div>
+    </div>
+@endif
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+  <div class="container">
+  <ul class="navbar-nav">
         @foreach($menu as $menu)
-          <li class="nav-item">
-            <a class="nav-link active" href="product/cate/{!! $menu->id !!}"> {!! $menu->name !!} </a>
+          <li class="nav-item" style="padding: 5px">
+            <a class="nav-link" href="{{url('product/cate/'.$menu->id)}}"> {!! $menu->name !!} </a>
           </li>
           @endforeach
+      <li class="nav-item" style="padding: 5px">
+          <a class="nav-link" href=""> Đồng hồ thông minh </a>
+        </li>
+        <li class="nav-item" style="padding: 5px">
+          <a class="nav-link" href=""> Máy cũ giá rẻ </a>
+        </li>
+        <li class="nav-item" style="padding: 5px">
+          <a class="nav-link" href=""> Sim, Thẻ cào </a>
+        </li>
+  </ul>
+  <form method="POST" class="form-inline " action="/action_page.php">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search for...">
+      <button class="btn btn-success" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
 
-
-
-        <form class="form-inline my-2 my-lg-0 mr-lg-2" method="POST" action="{{asset('product/search')}}">
-          {!! csrf_field() !!}
-          <li class="nav-item">
-              <div class="input-group">
-                <ul>
-                  <li>
-                    <input id="timkiem" class="form-control" type="text" placeholder="Search for..." name="textsearch">
-                  </li>
-
-
-                </ul>
-
-              </div>
-          </li>
-          <li class="nav-item">
-            <span class="input-group-append">
-              <button type="submit" name="searchbox" class="btn btn-success"><i class="fa fa-search"></i></button>
-            </span>
-          </li>
-        </form>
-
-
-
-            @if(!Auth::check())
-              <li class="nav-item">
-                <a class="nav-link" href="#">Đăng ký</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{asset('login')}}">Đăng nhập</a>
-              </li>
-            @else
-              <li class="nav-item">
-                <a class="nav-link" href="">Profile</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{asset('logout')}}">Logout</a>
-              </li>
-            @endif
-          <li class="nav-item">
-            <a class="nav-link" href="{{url('shoppingcart/list')}}"><i class="fa fa-shopping-cart" style="font-size: 15px;"></i></a>
-          </li>
-          <li class="nav-item" style="padding-left: 0px">
-            <span style="width: 5px; height: 5px; border-radius: 1px; background-color: green;color: white;">
-              {{Cart::count()}}
-            </span>
-          </li>
-        </ul>
-      </div>
-  </nav>
 

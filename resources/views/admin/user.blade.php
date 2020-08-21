@@ -31,7 +31,8 @@
                   <th>ID</th>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Password</th>
+                  <th>Provider</th>
+                  <th>Role</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -41,7 +42,8 @@
                   <td>{{$row->id}}</td>
                   <td>{{$row->name}}</td>
                   <td>{{$row->email}}</td>
-                  <td>{{$row->password}}</td>
+                  <td>{{$row->provider}}</td>
+                  <td>{{$row->role}}</td>
                   <td>
                     <a href="user/edit/{{$row->id}}">Edit</a>/<a href="user/delete/{{$row->id}}" onclick="return ConfirmDelete();">Delete</a></td>
                   </tr>

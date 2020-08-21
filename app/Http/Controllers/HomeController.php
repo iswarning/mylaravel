@@ -14,14 +14,21 @@ use Form;
 use Cart;
 use Carbon\Carbon;
 use App\Slide;
+use App\User;
+use Pusher\Pusher;
+use App\Notifications\TestNotification;
+use Illuminate\Support\Facades\Route;
+use DB;
 class HomeController extends Controller
 {
 	public function Home()
 	{
-		$index = Product::all();
 		$menu = TypeProduct::all();
-		$slide = Slide::all();
-    	return view('layout.default',compact('index','menu','slide'));
+		$topdeal = Product::all()->take(4);
+		$pkgiare = Product::where('MaLoai',2)->orderBy('Gia','desc')->take(4)->get();
+		$tablet = Product::where('MaLoai',3)->take(4)->get();
+		$laptop = Product::where('MaLoai',4)->take(4)->get();
+    	return view('layout.default',compact('menu','topdeal','pkgiare','tablet','laptop'));
 	}
 
 	public function search(Request $request){
@@ -31,9 +38,10 @@ class HomeController extends Controller
 
 	public function detail($id)
 	{
-		$detail = Product::where('MaSanPham',$id)->first();
+		$detail = Product::find($id);
 		$comment = Comment::where('id_product',$id)->orderBy('created_at','DESC')->paginate(5);
-		return view('product.detail',compact('detail','comment'));
+		$slided = Slide::where('name','=','Slide Detail')->get();
+		return view('product.detail',compact('detail','comment','slided'));
 	}
 
 	public function comment(Request $request, $id)
@@ -46,18 +54,25 @@ class HomeController extends Controller
 		$newComment['email_user'] = $email_user;
 		$newComment->save();
 
+        $last_id = Comment::find($newComment['id']);
+
+        if($newComment){
+            /* Thông báo có comment mới */
+            app('App\Http\Controllers\SendNotification')->store('New Comments',$last_id->content);
+        }
+
 		return Redirect::back();
 
 	}
 
-	public function cate($id){
-		$cate = Product::where('MaLoai','=',$id)->get();
-		return view('product.cate',compact('cate'));
-	}
+
 
 	public function add($id)
     {
-    	$data = Product::where('MaSanPham',$id)->first();
+    	$data = Product::find($id);
+    	if($data->Instock < 1){
+    		return redirect('shoppingcart/list')->withErrors("San Pham Het Hang");
+    	}
     	$cart=Cart::add([
     		'id' => $id,
     		'name' => $data->TenSanPham,
@@ -66,7 +81,7 @@ class HomeController extends Controller
     		'weight' => 550,
     		'options' => ['img' => $data->HinhAnh]
     	]);
-    	return back();
+    	return redirect('shoppingcart/list');
     }
 
     public function liveSearch(Request $request){
@@ -76,7 +91,7 @@ class HomeController extends Controller
             if($data){
                 foreach($data as $pros){
                     $search .= '<tr>
-                    <td>' . $pros->MaSanPham . '</td>
+                    <td>' . $pros->id . '</td>
                     <td>' . $pros->TenSanPham . '</td>
                     <td>' . $pros->MoTa . '</td>
                     <td>' . $pros->Gia . '</td>

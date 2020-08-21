@@ -23,16 +23,14 @@ class ShoppingCartController extends Controller
 
     public function update(Request $request, $rowId)
     {
-    	//$data = Product::where('MaSanPham',$request->idpro)->select('Instock');
+
     	$qty = $request->qty;
+        $getID = Product::find($request->id);
+        if($qty > $getID->Instock){
+            return redirect('shoppingcart/list')->withErrors("So Luong Khong Du");
+        }
 		Cart::update($rowId,$qty);
-    	/*if($qty <= $data){
-    		
-    		return back()->with('<script>alert("Updated Success")</script>');
-    	}
-    	else{
-    		return back()->with('<script>alert("Updated Failed")</script>');
-    	}*/
+    	
     	return back();
     }
 }

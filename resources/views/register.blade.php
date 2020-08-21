@@ -74,7 +74,7 @@
 </head>
 <body>
 
-<form method="POST" action=""> 
+<form method="POST" action="">
   {!! csrf_field() !!}
   <div class="container">
     <h1>Sign Up</h1>

@@ -27,11 +27,17 @@ class AddController extends Controller
     		'pass.min' => 'Password have at least 6 character',
     		'pass.max' => 'Name not exceed 255 character'
     	]);
+        if(empty($request->role)){
+            $role = 2;
+        }else{
+            $role = $request->role;
+        }
 
     	$data = User::create([
     		'name' => $request->name,
     		'email' => $request->email,
-    		'password' => Hash::make($request->pass)
+    		'password' => Hash::make($request->pass),
+            'role' => $role
     	]);
 
     	if($data){

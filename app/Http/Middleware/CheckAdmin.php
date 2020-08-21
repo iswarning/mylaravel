@@ -18,7 +18,7 @@ class CheckAdmin
     public function handle($request, Closure $next)
     {
         if(Auth::check()){
-            if(Auth::user()->email == "admin@gmail.com")
+            if(Auth::user()->role == 1)
                 return $next($request);
             else
                 return redirect('home');

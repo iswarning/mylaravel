@@ -7,6 +7,8 @@ use DB;
 use App\TypeProduct;
 use App\Product;
 use Cart;
+use App\Slide;
+use App\Notification;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -29,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('layout.menu',function($view){
             $menu = TypeProduct::all();
             $view->with('menu',$menu);
+        });
+        view()->composer('layout.menu',function($view){
+            $slide = Slide::where('name','=','slide show')->get();
+            $view->with('slide',$slide);
         });
         view()->composer('admin.dashboard',function($view){
             $listP = Product::paginate(5);

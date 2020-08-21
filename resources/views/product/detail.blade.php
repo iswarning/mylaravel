@@ -1,34 +1,7 @@
 @extends('layout.master')
-<!DOCTYPE html>
-<html>
-<head>
-	<title>@section('title')
-			Chi tiết sản phẩm 
-	 @endsection</title>
-	 
-	<meta charset="utf-8">  
-	<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
 
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}">
-	<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css')}}">
-	<link rel="stylesheet" href="{{ asset('css/fontawesome-all.min.css')}}">
-	<link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{ asset('css/chitiet.css')}}">
-	<!-- jQuery library -->
-	<script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
-
-	<!-- Popper JS -->
-	<script src="{{ asset('js/popper.min.js')}}"></script>
-
-	<!-- Latest compiled JavaScript -->
-	<script src="{{ asset('js/bootstrap.min.js')}}"></script>
-	<script src="{{ asset('js/bootstrap-datepicker.min.js')}}"></script>
-</head>
-<body>
 @section('content')
-	<div class="container">
-		<div class="row">
+		<div class="row" style="margin: 50px 0;">
 			<div class="col-md-5 border-right">
 				<article>
 					<div class="img-big-wrap">
@@ -38,13 +11,19 @@
 					</div>
 					<div class="img-small-wrap">
 						<div class="img-gallery">
-							<img class="img-fluid" src="{!! asset($detail->HinhAnh) !!}">
+							<a href="#" onclick="showImage1()">
+								<img id="img1" class="img-fluid" src="{!! asset($detail->HinhAnh) !!}">
+							</a>
 						</div>
 						<div class="img-gallery">
-							<img class="img-fluid" src="{!! asset($detail->HinhCT1) !!}">
+							<a href="#" onclick="showImage2()">
+								<img id="img2" class="img-fluid" src="{!! asset($detail->HinhCT1) !!}">
+							</a>
 						</div>
 						<div class="img-gallery">
-							<img class="img-fluid" src="{!! asset($detail->HinhCT2) !!}">
+							<a href="#" onclick="showImage3()">
+								<img id="img3" class="img-fluid" src="{!! asset($detail->HinhCT2) !!}">
+							</a>
 						</div>
 					</div>
 				</article>
@@ -80,8 +59,6 @@
 				</form>
 			</div>
 		</div>
-	</div>
-	<div class="container">
 		<hr width="100%" />
 		<div class="row">
 			<div class="col-md-7">
@@ -101,33 +78,11 @@
 						<li data-target="#demo" data-slide-to="8"></li>
 					</ul>
 					<div class="carousel-inner">
-						<div class="carousel-item active">
-							<img src="{{ asset('image/a6.gif ')}}" alt="Los Angeles" width="100%" height="100%"> 
+						@foreach($slided as $s)
+						<div class="carousel-item <?php if($s->id = 8){echo "active";} ?>">
+							<img src="{{ asset($s->src)}}" alt="{{$s->alt}}" width="100%" height="100%"> 
 						</div>
-						<div class="carousel-item">
-							<img src="{{ asset('image/a6x2.jpg')}}" alt="Chicago" width="100%" height="100%">
-						</div>
-						<div class="carousel-item">
-							<img src="{{ asset('image/a6x3.jpg')}}" alt="New York" width="100%" height="100%">
-						</div>
-						<div class="carousel-item">
-							<img src="{{ asset('image/a6x4.jpg')}}" alt="New York" width="100%" height="100%">
-						</div>
-						<div class="carousel-item">
-							<img src="{{ asset('image/a6x5.jpg')}}" alt="New York" width="100%" height="100%">
-						</div>
-						<div class="carousel-item">
-							<img src="{{ asset('image/a6x6.jpg')}}" alt="New York" width="100%" height="100%">
-						</div>
-						<div class="carousel-item">
-							<img src="{{ asset('image/a6x7.jpg')}}" alt="New York" width="100%" height="100%">
-						</div>
-						<div class="carousel-item">
-							<img src="{{ asset('image/a6x8.jpg')}}" alt="New York" width="100%" height="100%">
-						</div>
-						<div class="carousel-item">
-							<img src="{{ asset('image/a6x9.jpg')}}" alt="New York" width="100%" height="100%">
-						</div>
+						@endforeach
 					</div>
 					<a class="carousel-control-prev" href="#demo" data-slide="prev">
 						<span class="carousel-control-prev-icon"></span>
@@ -214,9 +169,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	<hr width="80%" />
-	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<!-- Tab panes -->
@@ -227,32 +180,53 @@
 							<div class="form-group">
 								<label for="comment"><h4>Comments:</h4></label>
 								<textarea id="comment" class="form-control" rows="4" placeholder="Write a comment..." name="content"></textarea><br>
+								
 								<input type="submit" name="comment" value="Send">
 							</div>
 						</form>
+
 					</div>
 				</div>
+				
 						@foreach($comment as $c)
-						<div class="media">
-							<a href="#" class="pull-left">
-								<img src="image/avt.png" class="media-photo img-circle" width="64px" height="64px">
-							</a>
-							<div class="media-body">
-								<span class="media-meta pull-right">
-									{!! Carbon\Carbon::parse($c->created_at)->diffForHumans() !!}
-								</span>
-								<h4 class="title">
-									{!! Auth::user()->name !!}
-								</h4>
-								<p class="summary">{!! $c->content !!}</p>
+						<hr>
+						<div class="row">
+							<div class="col-md-2">
+								<img src="{{asset('image/avatar-default.jpg')}}" width="40px" height="40px">
 							</div>
-							
+							<div class="col-md-8">
+								<h5><b>{{$c->email_user}}</b></h5>
+								<p>{{$c->content}}</p>
+							</div>
+							<div class="col-md-2">
+								{{Carbon\Carbon::parse($c->created_at)->diffForHumans()}}
+								<br><a href="#" onclick="reply()" id="clickme">Reply</a>
+							</div>
 						</div>
-						@endforeach
+					
+
 			</div>
 		</div>
-	</div>
+						@endforeach
 
+<script type="text/javascript">
+		function showImage1(){
+			var myimage = document.getElementById("#myimage");
+			var img1 = document.getElementById("img1");
+			myimage.src = img1.src;
+		}
+
+		function showImage2(){
+			var myimage = document.getElementById("#myimage");
+			var img2 = document.getElementById("img2");
+			myimage.src = img2.src;
+		}
+
+		function showImage3(){
+			var myimage = document.getElementById("#myimage");
+			var img3 = document.getElementById("img3");
+			myimage.src = img3.src;
+		}
+
+</script>
 @endsection
-</body>
-</html>

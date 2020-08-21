@@ -16,7 +16,7 @@
 	  <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
 	  <!-- Custom styles for this template-->
 	  <link href="{{ asset('css/sb-admin.css')}}" rel="stylesheet">
-
+    <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
 </head>
@@ -80,40 +80,6 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-fw fa-envelope"></i>
-            <span class="d-lg-none">Comments
-              <span class="badge badge-pill badge-primary">12 New</span>
-            </span>
-            <span class="indicator text-primary d-none d-lg-block">
-              <i class="fa fa-fw fa-circle"></i>
-            </span>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="messagesDropdown">
-            <h6 class="dropdown-header">New Messages:</h6>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <strong>David Miller</strong>
-              <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">Hey there! This new version of SB Admin is pretty awesome! These messages clip off when they reach the end of the box so they don't overflow over to the sides!</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <strong>Jane Smith</strong>
-              <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">I was wondering if you could meet for an appointment at 3:00 instead of 4:00. Thanks!</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <strong>John Doe</strong>
-              <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">I've sent the final files over to you for review. When you're able to sign off of them let me know and we can discuss distribution.</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item small" href="#">View all messages</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-bell"></i>
             <span class="d-lg-none">Alerts
@@ -123,35 +89,22 @@
               <i class="fa fa-fw fa-circle"></i>
             </span>
           </a>
-          <div class="dropdown-menu" aria-labelledby="alertsDropdown">
+          <div class="dropdown-menu menu-notification" aria-labelledby="alertsDropdown">
             <h6 class="dropdown-header">New Alerts:</h6>
+
+            <!-- Show Notifications -->
+            @foreach(Auth::user()->notifications as $notification)
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">
               <span class="text-success">
                 <strong>
-                  <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
+                  <i class=""></i>{{ $notification->data['title'] }}</strong>
               </span>
-              <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+              <span class="small float-right text-muted">{{ Carbon\Carbon::parse($notification->created_at)->diffForHumans()}}</span>
+              <div class="dropdown-message large" style="width:300px;">{{ $notification->data['content'] }}</div>
             </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <span class="text-danger">
-                <strong>
-                  <i class="fa fa-long-arrow-down fa-fw"></i>Status Update</strong>
-              </span>
-              <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <span class="text-success">
-                <strong>
-                  <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
-              </span>
-              <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
-            </a>
+            @endforeach
+
             <div class="dropdown-divider"></div>
             <a class="dropdown-item small" href="#">View all alerts</a>
           </div>
@@ -175,7 +128,7 @@
       </ul>
     </div>
 </nav>
-	
+
 	@yield('content')
     <script type="text/javascript">
       function ConfirmDelete()
@@ -188,7 +141,7 @@
           }
       }
 
-      
+
     </script>
 	<!-- Bootstrap core JavaScript-->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
@@ -204,6 +157,27 @@
     <!-- Custom scripts for this page-->
     <script src="{{ asset('js/sb-admin-datatables.min.js') }}"></script>
     <script src="{{ asset('js/sb-admin-charts.min.js') }}"></script>
+
+    <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+
+
+    <script type="text/javascript">
+        var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
+            encrypted: true,
+            cluster: "ap1"
+        });
+        var channel = pusher.subscribe('NotificationEvent');
+        channel.bind('send-message', function(data) {
+            var newNotificationHtml = `
+            <a class="dropdown-item" href="#">
+                <span>${data.title}</span><br>
+                <small>${data.content}</small>
+            </a>
+            `;
+
+            $('.menu-notification').prepend(newNotificationHtml);
+        });
+    </script>
 
 </body>
 </html>

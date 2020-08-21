@@ -17,7 +17,8 @@ Route::get('/home','HomeController@Home')->name('home');
 Route::group(['prefix'=>'product'],function(){
 	Route::get('/detail/{id}','HomeController@detail');
 	Route::post('/detail/{id}','HomeController@comment')->middleware('guest');
-	Route::get('/cate/{id}','HomeController@cate');
+	//Route::post('/detail/{id}','HomeController@reply')->middleware('guest');
+	Route::get('/cate/{id}','CategoryController@cate');
 	Route::post('/search','HomeController@search');
 });
 
@@ -89,3 +90,9 @@ Route::get('getKeySearch/{key}','HomeController@liveSearch');
 /* Message Box */
 Route::get('messages','ChatController@getMessage');
 Route::post('messages','ChatController@sendMessage');
+
+/* Test Notification */
+//Route::get('notification', 'SendNotification@create')->name('notification.create');
+//Route::post('notification', 'SendNotification@store')->name('notification.store');
+
+

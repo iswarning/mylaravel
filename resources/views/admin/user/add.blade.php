@@ -21,6 +21,10 @@
 	    <label for="pr">Password:</label>
 	    <input type="password" class="form-control" name="pass" id="pr">
 	  </div>
+	  <div class="form-group">
+	    <label for="pr">Role:</label>
+	    <input type="number" class="form-control" name="role">
+	  </div>
 	  <button type="submit" class="btn btn-default">Add</button>
 	  <input action="action" onclick="window.history.go(-1); return false;" type="submit" value="Cancel"/>
 	</div>

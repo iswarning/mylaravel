@@ -18,6 +18,11 @@
     @endsection
 
 	@section('content')
+  @if($errors->any())
+      @foreach($errors->all() as $er)
+        <div class="alert alert-danger">{{$er}}</div>
+        @endforeach
+      @endif
 	<div class="card mb-3" style="margin-top: 100px;">
         <div class="card-header">
           <i class="fa fa-table"></i> Shopping Cart</div>
@@ -55,6 +60,7 @@
               			<a href="{{url('shoppingcart/delete/'.$c->rowId)}}">Delete</a>
               		</td>
               		<input type="hidden" name="rowId" id="rowId" value="{{$c->rowId}}">
+                  <input type="hidden" name="id" id="id" value="{{$c->id}}">
               	</tr>
               </form>
               	@endforeach 
@@ -65,14 +71,14 @@
               <label style="font-size: 20px;color: red;">Total: </label>
               <span> {{Cart::priceTotal()}} </span>
             </div>
-            <a href="{{url('order')}}"> Order </a>
+            <a href="{{url('order')}}"> Checkout </a>
         
             
           </div>
         </div>
       </div>
       @endsection
-      !-- Bootstrap core JavaScript-->
+      <!-- Bootstrap core JavaScript-->
 
       @section('script')
         <script type="text/javascript">

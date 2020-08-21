@@ -8,6 +8,7 @@ use Auth;
 use App\OrderProduct;
 use App\Order;
 use DB;
+use App\Product;
 class OrderController extends Controller
 {
 	public function index()
@@ -43,8 +44,6 @@ class OrderController extends Controller
 
     	foreach($cart as $c)
     	{
-    		$price = $c->price;
-    		$qty = $c->qty;
     		$orderpro = new OrderProduct();
     		$orderpro->order_id = $order_id;
     		$orderpro->product_id = $c->id;
@@ -52,6 +51,13 @@ class OrderController extends Controller
     		$orderpro->price = $c->price;
     		$orderpro->quantity = $c->qty;
     		$orderpro->save();
+            if($orderpro){
+                $getIn = Product::find($c->id);
+                $sub = $getIn->Instock - $c->qty;
+                $update = Product::find($c->id)->update([
+                    'Instock' => $sub
+                ]);
+            }
     	}
 
     	Cart::destroy();

@@ -34,58 +34,75 @@
 @endsection
 
 @section('content')
-	<div class="container">
-		<form method="POST" action="">
-			{{csrf_field()}}
-			<h3>Order</h3><br>
-			<div class="form-group">
-				<label class="title">Name: </label>
-				<span> {{$user->name}} </span>
-			</div>
-			<div class="form-group">
-				<label class="title">Email: </label>
-				<span> {{$user->email}} </span>
-			</div>
+		<div class="row">
+			<div class="col-md-5">
+				<form method="POST" action="">
+					{{csrf_field()}}
+					<h3 style="color: red;margin-top: 50px;"> Checkout Information </h3><br>
 
-			
-			<label class="title">List:</label><br>
-			@foreach($cart as $c)
-			<div class="form-group list">				
-				<span><img src="{{asset($c->options->img)}}" width="40px" height="40px"></span>
-				<span>{{$c->name}}</span>
-				<span>{{$c->price}}</span>
-				<span>{{$c->qty}}</span><br>
-			</div>
-			@endforeach
-			
+					<div class="form-group">
+						<label class="title">Name: </label>
+						<input type="text" name="name" class="form-control" value="{{$user->name}}" readonly>
+					</div>
 
-			<div class="form-group">
-				<label class="title">Payment:</label><br>
-				<input id="offline" type="radio" name="pay" value="offline" checked>
-				<label for='offline'> Offline </label><br>
-				<input id="paypal" type="radio" name="pay" value="paypal">
-				<label for='paypal'> Paypal </label><br>
-				<input id="atm" type="radio" name="pay" value="atm">
-				<label for='atm'> ATM </label><br>
-				<input id="visa" type="radio" name="pay" value="visa">
-				<label for='visa'> Visa </label><br>
-			</div>
+					<div class="form-group">
+						<label class="title">Email: </label>
+						<input type="text" name="email" class="form-control" value="{{$user->email}}" readonly>
+					</div>
 
-			<div class="form-group" id="form_off">
-				<label class="title">Street Address: </label>
-				<textarea rows="2" name="position"></textarea>
-			</div>
+					<div class="form-group">
+						<label class="title">Company Name: </label>
+						<input type="text" name="company" class="form-control" >
+					</div>
 
-			<div class="form-group">
-				<label class="title">Note: </label>
-				<textarea rows="4" name="note"></textarea>
-			</div>
-			<div class="form-group" style="float: right;">
-				<label style="font-size: 20px;color: red;">Total: </label>
-				<span> {{Cart::priceTotal()}} </span>
-			</div>
-			<br>
-			<button type="submit" class="btn btn-danger"> Order </button>
-		</form>
-	</div>
+					<div class="form-group">
+						<label class="title">Position: </label>
+						<textarea class="form-control"></textarea>
+					</div>
+					
+					<hr>
+					<h4>List Cart:</h4><br>
+		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+          	@foreach($cart as $c)
+          	<tr>
+	          	<td><img src="{{asset($c->options->img)}}" width="40px" height="40px"></td>
+	          	<td>{{$c->name}}</td>
+	          	<td>{{$c->price}}</td>
+	          	<td>{{$c->qty}}</td>
+	          </tr>
+	          @endforeach
+          </tbody>
+      </table>
+					
+					<hr>
+					<h4>Payment:</h4><br>
+					<div class="form-group">
+						<input  id="offline" type="radio" name="pay" value="offline" checked>
+						<label for='offline'> Offline </label><br>
+						<input  id="paypal" type="radio" name="pay" value="paypal">
+						<label for='paypal'> Paypal </label><br>
+						<input  id="atm" type="radio" name="pay" value="atm">
+						<label for='atm'> ATM </label><br>
+						<input  id="visa" type="radio" name="pay" value="visa">
+						<label for='visa'> Visa </label><br>
+					</div>
+
+					<div class="form-group" style="float: right;">
+						<label style="font-size: 20px;color: red;">Total: </label>
+						<span> {{Cart::priceTotal()}} </span>
+					</div>
+					<br>
+					<button type="submit" class="btn btn-danger"> Order </button>
+				</form>
+			</div>	
+		</div>
 @endsection

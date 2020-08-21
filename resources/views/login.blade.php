@@ -85,9 +85,15 @@
 
     <label for="psw"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="password" required>
+    
+    <button type="submit" name="login" class="registerbtn">Sign In</button><br>
+    <hr>
     <a href="{{url('register')}}">Sigh Up</a>
-    <button type="submit" name="login" class="registerbtn">Sign In</button>
-    <a href="{{ url('/login/redirect/facebook') }}">FaceBook</a>
+    <hr>
+    <a href="{{ url('/login/redirect/facebook') }}">Sign In with Facebook</a><br>
+    <hr>
+    <a href="{{ url('/login/redirect/google') }}">Sign In with Google</a><br>
+    
   </div>
 
 </form>

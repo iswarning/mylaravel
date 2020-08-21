@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use Hash, Socialite;
+use DB;
+use Pusher\Pusher;
+use App\Notifications\TestNotification;
 class LoginController extends Controller
 {
 
@@ -46,13 +49,32 @@ class LoginController extends Controller
             return back()->with('<script>alert("Password invalid")</script>');
         }
 
+        $validated = $request->validate([
+            'email' => 'unique:users'
+        ],[
+            'email.unique' => 'Email đã tồn tại'
+        ]);
+
         $register = new User();
         $register->name = $request->text;
         $register->email = $request->email;
         $register->password = Hash::make($request->password);
+        $register->role = 2;
         $register->save();
 
-        return view('login');
+        $last_id = DB::getPdo()->lastInsertId();
+        $last_user = User::find($last_id);
+
+        if($register){
+
+            /* Thông báo tạo user mới */
+            app('App\Http\Controllers\SendNotification')->store('New Users',$last_user->email);
+
+            Auth::login($register);
+            return url('home');
+        }else{
+            echo "<script>alert(.$validated.)</script>";
+        }
     }
 
     // Login with FaceBook
@@ -60,7 +82,7 @@ class LoginController extends Controller
         return Socialite::driver($provider)->redirect();
     }
 
-    
+
     public function callback($provider){
         $getInfo = Socialite::driver($provider)->user();
         $user = $this->createUser($getInfo,$provider);
@@ -75,6 +97,7 @@ class LoginController extends Controller
             $user->email = $getInfo->email;
             $user->provider = $provider;
             $user->provider_id = $getInfo->id;
+            $user->role = 2;
             $user->save();
         }
         return $user;

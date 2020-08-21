@@ -5,7 +5,9 @@
   <div class="content-wrapper">
   	<div class="container-fluid">
   		@if($errors->any())
-        <div class="alert alert-danger">{{$errors->first()}}</div>
+  		@foreach($errors->all() as $er)
+        <div class="alert alert-danger">{{$er}}</div>
+        @endforeach
       @endif	
 	  <div class="form-group">
 	    <label for="email">Name:</label>

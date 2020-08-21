@@ -11,14 +11,14 @@
   <div class="content-wrapper">
     <div class="container-fluid">
       <!-- Breadcrumbs-->
-      
+
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="#">Dashboard</a>
         </li>
         <li class="breadcrumb-item active">Product</li>
       </ol>
-      
+
       <!-- Example DataTables Card-->
       <div class="card mb-3">
         <div class="card-header">
@@ -42,7 +42,7 @@
               <tbody>
               	@foreach($listP as $row)
                 <tr>
-                  <td>{{$row->MaSanPham}}</td>
+                  <td>{{$row->id}}</td>
                   <td>{{$row->MaLoai}}</td>
                   <td>{{$row->TenSanPham}}</td>
                   <td>{{number_format($row->Gia)}}</td>
@@ -94,12 +94,12 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <a class="btn btn-primary" href="{{url('logout')}}">Logout</a>
           </div>
         </div>
       </div>
     </div>
-    
+
   </div>
   @endsection
 </body>
