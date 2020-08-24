@@ -6,11 +6,14 @@ use Illuminate\Http\Request;
 use App\Notifications\TestNotification;
 use App\User;
 use Pusher\Pusher;
+use App\Notification;
+use Auth;
 class SendNotification extends Controller
 {
-    public function create()
+    public function index()
     {
-        return view('notification');
+        $notify = Auth::user()->notifications;
+        return view('admin.notification.list',compact('notify'));
     }
 
     public function store($title, $content)
@@ -18,8 +21,6 @@ class SendNotification extends Controller
         $user = User::find(1);
         $data = ['title' => $title, 'content' => $content];
         $user->notify(new TestNotification($data));
-
-        return view('notification');
 
         $options = array(
             'cluster' => 'ap1',

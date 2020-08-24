@@ -57,17 +57,18 @@
           </li>
           @endforeach
       <li class="nav-item" style="padding: 5px">
-          <a class="nav-link" href=""> Đồng hồ thông minh </a>
+          <a class="nav-link" href="#"> Đồng hồ thông minh </a>
         </li>
         <li class="nav-item" style="padding: 5px">
-          <a class="nav-link" href=""> Máy cũ giá rẻ </a>
+          <a class="nav-link" href="#"> Máy cũ giá rẻ </a>
         </li>
         <li class="nav-item" style="padding: 5px">
-          <a class="nav-link" href=""> Sim, Thẻ cào </a>
+          <a class="nav-link" href="#"> Sim, Thẻ cào </a>
         </li>
   </ul>
-  <form method="POST" class="form-inline " action="/action_page.php">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search for...">
+  <form method="POST" class="form-inline " action="{{ url('product/search') }}">
+    @csrf
+      <input class="form-control mr-sm-2" type="text" placeholder="Search for..." name="textsearch">
       <button class="btn btn-success" type="submit">Search</button>
     </form>
   </div>

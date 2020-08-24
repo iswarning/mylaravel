@@ -8,23 +8,19 @@ use App\Message;
 use Auth;
 class ChatController extends Controller
 {
-	public function __construct(){
-		$this->middleware('auth');
-	}
-
-    public function getMessage(){
-    	return Message::with('user')->get();
+    public function index(){
+        return view('chat');
     }
 
     public function sendMessage(Request $request){
-    	$user = Auth::user();
+        $from = Auth::id();
+        $to = $request->receiver_id;
+        $message = $request->message;
 
-    	$message = $user->messages()->create([
-    		'message' => $request->input('message')
-    	]);
-
-    	broadcast(new MessageSent($user,$message))->toOthers();
-
-    	return ['status' => 'Message Sent!'];
+        $data = new Message();
+        $data->user_id = $to;
+        $data->message = $message;
+        $data->is_read = 0;
+        $data->save();
     }
 }

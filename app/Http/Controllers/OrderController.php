@@ -20,7 +20,7 @@ class OrderController extends Controller
 
     public function newOrder(Request $request)
     {
-    	
+
     	$cart = Cart::content();
     	$total = 0;
 
@@ -36,7 +36,8 @@ class OrderController extends Controller
     	$new->note = $request->note;
     	$new->total_quantity = Cart::count();
     	$new->total_amount = $a;
-    	$new->position = $request->position;
+        $new->position = $request->position;
+        $new->note = $request->note;
     	$new->status = 1;
     	$new->save();
 
@@ -79,9 +80,9 @@ class OrderController extends Controller
     public function deleteOrder($id)
     {
         $order = Order::find($id);
-        
+
         $orderdetail = OrderProduct::where('order_id','=',$order->id)->get();
-        foreach($orderdetail as $o){           
+        foreach($orderdetail as $o){
             $o->delete();
         }
 
@@ -93,6 +94,11 @@ class OrderController extends Controller
     {
         $order = OrderProduct::find($id);
         $order->delete();
+        $id_order = Order::where('id',$order->order_id)->first();
+        $checkexist = OrderProduct::where('order_id',$id_order)->get();
+        if(empty($checkexist)){
+            $id_order->delete();
+        }
         return back();
     }
 }

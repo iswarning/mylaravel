@@ -1,12 +1,4 @@
 @extends('admin.master')
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <title>SB Admin - Start Bootstrap Template</title>
-</head>
-<body>
-  <!-- Navigation-->
 @section('content')
   <div class="content-wrapper">
     <div class="container-fluid">
@@ -20,6 +12,7 @@
       </ol>
 
       <!-- Example DataTables Card-->
+      @csrf
       <div class="card mb-3">
         <div class="card-header">
           <i class="fa fa-table"></i> Data Table Products</div>
@@ -51,14 +44,14 @@
                   <td><img src="{{asset($row->HinhCT2)}}" width="40px" height="40px"></td>
                   <td>{{$row->HangSanXuat}}</td>
                   <td>
-                  	<a href="product/edit/{{$row->MaSanPham}}">Edit</a>
-          			/<a href="product/delete/{{$row->MaSanPham}}">Delete</a></td>
+                  	<a href="{{ url('admin/product/edit/'.$row->id) }}">Edit</a>
+          			/<a href="{{ url('admin/product/delete/'.$row->id) }}">Delete</a></td>
                 </tr>
                 @endforeach
          		</tbody>
             </table>
             <div>
-            	<a href="{{asset('admin/product/add')}}">Add Products</a>
+            	<a href="{{url('admin/product/add')}}">Add Products</a>
             </div>
             <div style="float: right;">
             	{{ $listP->links() }}
@@ -102,6 +95,3 @@
 
   </div>
   @endsection
-</body>
-
-</html>

@@ -3,7 +3,7 @@
 	@section('content')
     <hr>
     <h4 id="catehome"> ------- TOP DEALS -------</h4>
-    
+
 <div class="row">
     @foreach($topdeal as $row)
     <form action="{{url('shoppingcart/add/'.$row->id)}}" method="POST">
@@ -20,12 +20,11 @@
       </div>
     </div>
     </form>
-    
     @endforeach
 </div>
 <hr>
 <h4 id="catehome"> ------- PHU KIEN GIA RE -------</h4>
-    
+
 <div class="row">
     @foreach($pkgiare as $rows)
     <form action="{{url('shoppingcart/add/'.$rows->id)}}" method="POST">
@@ -44,12 +43,12 @@
   </form>
     @endforeach
 
-    
+
 </div>
 
 <hr>
 <h4 id="catehome"> ------- TABLET NOI BAT NHAT -------</h4>
-    
+
 <div class="row">
     @foreach($tablet as $rows)
     <form action="{{url('shoppingcart/add/'.$rows->id)}}" method="POST">
@@ -68,12 +67,12 @@
   </form>
     @endforeach
 
-    
+
 </div>
 
 <hr>
 <h4 id="catehome"> ------- BEST SELLER LAPTOP -------</h4>
-    
+
 <div class="row">
     @foreach($laptop as $rows)
     <form action="{{url('shoppingcart/add/'.$rows->id)}}" method="POST">
@@ -92,7 +91,7 @@
   </form>
     @endforeach
 
-    
+
 </div>
 @endsection
 

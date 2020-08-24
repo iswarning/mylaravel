@@ -9,13 +9,16 @@ class UserController extends Controller
 {
 	public function index()
 	{
-		$data = User::paginate(5); 
+		$data = User::paginate(5);
 	    return view('admin.user',compact('data'));
 	}
     public function delete($id)
     {
     	$data= User::find($id);
-    	$data->delete();
+        if($data->role == 1 && $data->email == "admin@gmail.com"){
+            return "Bạn không thể xóa admin";
+        }
+        $data->delete();
     	return back();
     }
 }

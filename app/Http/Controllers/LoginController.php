@@ -24,7 +24,7 @@ class LoginController extends Controller
     	];
     	if(Auth::attempt($log))
     	{
-            if(Auth::user()->email == "admin@gmail.com")
+            if(Auth::user()->role === 1)
                 return redirect('admin/dashboard');
             else
                 return redirect('home');
@@ -46,7 +46,7 @@ class LoginController extends Controller
     public function postRegister(Request $request)
     {
         if($request->repassword != $request->password){
-            return back()->with('<script>alert("Password invalid")</script>');
+            return "Password invalid";
         }
 
         $validated = $request->validate([
@@ -54,6 +54,10 @@ class LoginController extends Controller
         ],[
             'email.unique' => 'Email đã tồn tại'
         ]);
+
+        if($request->text === "admin"){
+            return "Tên không hợp lệ";
+        }
 
         $register = new User();
         $register->name = $request->text;
@@ -69,15 +73,13 @@ class LoginController extends Controller
 
             /* Thông báo tạo user mới */
             app('App\Http\Controllers\SendNotification')->store('New Users',$last_user->email);
-
-            Auth::login($register);
-            return url('home');
+            return "Đăng ký thành công";
         }else{
-            echo "<script>alert(.$validated.)</script>";
+            return $validated;
         }
     }
 
-    // Login with FaceBook
+    // Login with FaceBook & Google
     public function redirect($provider){
         return Socialite::driver($provider)->redirect();
     }

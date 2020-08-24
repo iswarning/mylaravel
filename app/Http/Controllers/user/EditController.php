@@ -28,6 +28,9 @@ class EditController extends Controller
     		'pass.max' => 'Name not exceed 255 character'
     	]);
 
+        if($request->name === "admin"){
+            return redirect()->back()->withErorrs("Tên không hợp lệ");
+        }
     	$data = DB::table('users')->where('id',$request->id)->update([
     		'name' => $request->name,
     		'email' => $request->email,

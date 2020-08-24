@@ -51,9 +51,29 @@
     </div>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
+  <script type="text/javascript">
+
+    /*$(document).ready(function(){
+        $('#send').on('click',function(event){
+            event.preventDefault();
+            var comment = $('#comment').val();
+            var id_com = $('#id_com').val();
+            $.ajax({
+                url:'{{ url("product/detail/".$detail->id) }}',
+                method:'POST',
+                data:{comment:comment},
+                success:function(data){
+                    $('#showComment').html(data);
+                }
+            });
+        });
+    });*/
+</script>
 </body>
 </html>
 

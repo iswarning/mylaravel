@@ -11,13 +11,13 @@ class EditController extends Controller
 {
     public function edit(Request $request)
     {
-    	$data = DB::table('SANPHAM')->where('MaSanPham',$request->id)->first();
+    	$data = DB::table('SANPHAM')->find($request->id);
         $cate = TypeProduct::all();
     	return view('admin.product.edit',compact('data','cate'));
     }
     public function postEdit(Request $request)
     {
-    	$update = DB::table('SANPHAM')->where('MaSanPham',$request->id)->update([
+    	$update = DB::table('SANPHAM')->find($request->id)->update([
     		'TenSanPham' => $request->name,
     		'MoTa' => $request->mota,
     		'Gia' => $request->price
@@ -25,6 +25,6 @@ class EditController extends Controller
     	if($update){
     		return Redirect::back()->withErrors(['Update Success !']);
     	}
-    	
+
     }
 }

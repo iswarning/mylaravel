@@ -51,15 +51,15 @@
 					</div>
 
 					<div class="form-group">
-						<label class="title">Company Name: </label>
-						<input type="text" name="company" class="form-control" >
+						<label class="title">Position: </label>
+						<textarea class="form-control" name="position"></textarea>
 					</div>
 
-					<div class="form-group">
-						<label class="title">Position: </label>
-						<textarea class="form-control"></textarea>
-					</div>
-					
+                    <div class="form-group">
+						<label class="title">Note: </label>
+						<textarea class="form-control" name="note"></textarea>
+                    </div>
+
 					<hr>
 					<h4>List Cart:</h4><br>
 		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -82,7 +82,7 @@
 	          @endforeach
           </tbody>
       </table>
-					
+
 					<hr>
 					<h4>Payment:</h4><br>
 					<div class="form-group">
@@ -103,6 +103,6 @@
 					<br>
 					<button type="submit" class="btn btn-danger"> Order </button>
 				</form>
-			</div>	
+			</div>
 		</div>
 @endsection

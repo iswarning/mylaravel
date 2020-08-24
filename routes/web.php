@@ -38,7 +38,7 @@ Route::post('register','LoginController@postRegister');
 
 /* Admin System */
 Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
-	Route::get('dashboard','DashBoardController@index');
+    Route::get('dashboard','DashBoardController@index');
 	Route::group(['prefix'=>'product'],function(){
 		Route::get('/edit/{id}','product\EditController@edit');
 		Route::post('/edit/{id}','product\EditController@postEdit');
@@ -65,7 +65,8 @@ Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
 	Route::group(['prefix'=>'orderdetail'],function(){
 		Route::get('/','OrderController@orderdetailAdmin');
 		Route::get('/delete/{id}','OrderController@deleteOrderDetail');
-	});
+    });
+    Route::get('/notification/list','SendNotification@index');
 });
 
 /* Shopping Cart */
@@ -83,16 +84,11 @@ Route::group(['middleware'=>'guest'],function(){
 });
 
 
-/* Test Vue */
-Route::view('/api/test','vue');
-Route::get('getKeySearch/{key}','HomeController@liveSearch');
-
-/* Message Box */
-Route::get('messages','ChatController@getMessage');
-Route::post('messages','ChatController@sendMessage');
 
 /* Test Notification */
 //Route::get('notification', 'SendNotification@create')->name('notification.create');
 //Route::post('notification', 'SendNotification@store')->name('notification.store');
 
-
+/* Chat Box */
+Route::get('/chat', 'ChatController@index');
+Route::post('/message','ChatController@sendMessage');

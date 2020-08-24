@@ -36,10 +36,13 @@ class HomeController extends Controller
 		return view('product.search',compact('search'));
 	}
 
-	public function detail($id)
+	public function detail($id, Request $request)
 	{
-		$detail = Product::find($id);
-		$comment = Comment::where('id_product',$id)->orderBy('created_at','DESC')->paginate(5);
+        $detail = Product::find($id);
+        if($request->ajax()){
+            $comment = Comment::where('id_product',$id)->orderBy('created_at','DESC')->paginate(5)->render();
+        }
+        $comment = Comment::where('id_product',$id)->orderBy('created_at','DESC')->paginate(5);
 		$slided = Slide::where('name','=','Slide Detail')->get();
 		return view('product.detail',compact('detail','comment','slided'));
 	}
@@ -66,7 +69,7 @@ class HomeController extends Controller
 	}
 
 
-
+    /* Thêm sản phẩm vào giỏ hàng */
 	public function add($id)
     {
     	$data = Product::find($id);
@@ -84,7 +87,7 @@ class HomeController extends Controller
     	return redirect('shoppingcart/list');
     }
 
-    public function liveSearch(Request $request){
+    /*public function liveSearch(Request $request){
         if($request->ajax()){
             $search = '';
             $data = Product::where('TenSanPham','REGEXP',$request->search)->get();
@@ -100,5 +103,5 @@ class HomeController extends Controller
             }
             return Response($search);
         }
-    }
+    }*/
 }

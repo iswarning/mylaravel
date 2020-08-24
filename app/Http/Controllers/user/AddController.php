@@ -33,6 +33,9 @@ class AddController extends Controller
             $role = $request->role;
         }
 
+        if($request->name === "admin"){
+            return redirect()->back()->withErorrs("Tên không hợp lệ");
+        }
     	$data = User::create([
     		'name' => $request->name,
     		'email' => $request->email,

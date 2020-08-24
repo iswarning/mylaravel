@@ -49,7 +49,7 @@
 						<i class="fa fa-check-circle"></i>Tặng gói bảo hiểm rơi vỡ trong 6 tháng <br>
 						<i class="fa fa-check-circle"></i>Gói quà tặng Galaxy xem phim & uống cafe cuối tuần
 					</p>
-					
+
 
 					<input type="hidden" name="name" value="{!! $detail->TenSanPham !!}" />
 
@@ -80,7 +80,7 @@
 					<div class="carousel-inner">
 						@foreach($slided as $s)
 						<div class="carousel-item <?php if($s->id = 8){echo "active";} ?>">
-							<img src="{{ asset($s->src)}}" alt="{{$s->alt}}" width="100%" height="100%"> 
+							<img src="{{ asset($s->src)}}" alt="{{$s->alt}}" width="100%" height="100%">
 						</div>
 						@endforeach
 					</div>
@@ -91,10 +91,10 @@
 						<span class="carousel-control-next-icon"></span>
 					</a>
 				</div>
-				
+
 				<div class="col-md-12">
 
-					
+
 
 				</div>
 			</div>
@@ -156,7 +156,7 @@
 					<div class="col-sm-4">
 						Thẻ SIM:
 					</div>
-					<div class="col-sm-8">	
+					<div class="col-sm-8">
 						2 Nano SIM, Hỗ trợ 4G
 					</div>
 					<hr width="90%" />
@@ -180,53 +180,40 @@
 							<div class="form-group">
 								<label for="comment"><h4>Comments:</h4></label>
 								<textarea id="comment" class="form-control" rows="4" placeholder="Write a comment..." name="content"></textarea><br>
-								
-								<input type="submit" name="comment" value="Send">
+                                <input type="hidden" id="id_com" value="{{ $detail->id }}">
+								<input type="submit" name="comment" value="Send" id="send">
 							</div>
 						</form>
 
 					</div>
 				</div>
-				
-						@foreach($comment as $c)
-						<hr>
-						<div class="row">
-							<div class="col-md-2">
-								<img src="{{asset('image/avatar-default.jpg')}}" width="40px" height="40px">
-							</div>
-							<div class="col-md-8">
-								<h5><b>{{$c->email_user}}</b></h5>
-								<p>{{$c->content}}</p>
-							</div>
-							<div class="col-md-2">
-								{{Carbon\Carbon::parse($c->created_at)->diffForHumans()}}
-								<br><a href="#" onclick="reply()" id="clickme">Reply</a>
-							</div>
-						</div>
-					
+
+
+
 
 			</div>
-		</div>
-						@endforeach
+        </div>
+        <div id="showComment">
+        @foreach($comment as $c)
+        <hr>
+        <div class="row">
+            <div class="col-md-2">
+                <img src="{{asset('image/avatar-default.jpg')}}" width="40px" height="40px">
+            </div>
+            <div class="col-md-8">
+                <h5><b>{{$c->email_user}}</b></h5>
+                <p>{{$c->content}}</p>
+            </div>
+            <div class="col-md-2">
+                {{Carbon\Carbon::parse($c->created_at)->diffForHumans()}}
+                <br><a href="#" onclick="reply()" id="clickme">Reply</a>
+            </div>
+        </div>
+        @endforeach
+        </div>
+        <div>
+            {{$comment->links()}}
+        </div>
 
-<script type="text/javascript">
-		function showImage1(){
-			var myimage = document.getElementById("#myimage");
-			var img1 = document.getElementById("img1");
-			myimage.src = img1.src;
-		}
 
-		function showImage2(){
-			var myimage = document.getElementById("#myimage");
-			var img2 = document.getElementById("img2");
-			myimage.src = img2.src;
-		}
-
-		function showImage3(){
-			var myimage = document.getElementById("#myimage");
-			var img3 = document.getElementById("img3");
-			myimage.src = img3.src;
-		}
-
-</script>
 @endsection
