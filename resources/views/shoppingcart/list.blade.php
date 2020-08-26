@@ -28,8 +28,8 @@
           <i class="fa fa-table"></i> Shopping Cart</div>
         <div class="card-body">
           <div class="table-responsive">
-          	
-              
+
+
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
@@ -43,9 +43,9 @@
                 </tr>
               </thead>
               <tbody>
-              	
+
               	@foreach($cart as $c)
-                  
+
               	<form method="POST" action="{{url('shoppingcart/update/'.$c->rowId)}}">
                 {{csrf_field()}}
                 <tr>
@@ -63,7 +63,7 @@
                   <input type="hidden" name="id" id="id" value="{{$c->id}}">
               	</tr>
               </form>
-              	@endforeach 
+              	@endforeach
 
             </tbody>
             </table>
@@ -72,23 +72,9 @@
               <span> {{Cart::priceTotal()}} </span>
             </div>
             <a href="{{url('order')}}"> Checkout </a>
-        
-            
+
+
           </div>
         </div>
       </div>
-      @endsection
-      <!-- Bootstrap core JavaScript-->
-
-      @section('script')
-        <script type="text/javascript">
-          $(document).ready(function(){
-            $('#up').on('click',function(){
-              var  row = $('#rowId').val();
-              $.post('shoppingcart/update/'+row,function(data){
-                $('#qty').html(data);
-              });
-            });
-          });
-        </script>
       @endsection

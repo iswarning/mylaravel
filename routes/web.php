@@ -90,5 +90,4 @@ Route::group(['middleware'=>'guest'],function(){
 //Route::post('notification', 'SendNotification@store')->name('notification.store');
 
 /* Chat Box */
-Route::get('/chat', 'ChatController@index');
-Route::post('/message','ChatController@sendMessage');
+Route::get('/chat','ChatController@index');

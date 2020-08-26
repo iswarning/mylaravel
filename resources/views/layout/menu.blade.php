@@ -12,7 +12,14 @@
           <a class="nav-link" href="{{ url('register')}}"> Register </a>
         </li>
 
-        @else
+        @elseif(Auth::user()->role === 1)
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('admin/dashboard')}}"> Admin </a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link" href="{{ url('logout')}}"> Logout </a>
+         </li>
+         @else
         <li class="nav-item">
            <a class="nav-link" href="{{ url('logout')}}"> Logout </a>
         </li>

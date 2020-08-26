@@ -5,7 +5,7 @@
 <head>
   <title>SB Admin - Start Bootstrap Template</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  
+
 </head>
 <body>
   <!-- Navigation-->
@@ -13,14 +13,14 @@
   <div class="content-wrapper">
     <div class="container-fluid">
       <!-- Breadcrumbs-->
-      
+
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="#">Dashboard</a>
         </li>
         <li class="breadcrumb-item active">Comments</li>
       </ol>
-      
+
       <!-- Example DataTables Card-->
       <div class="card mb-3">
         <div class="card-header">
@@ -54,7 +54,7 @@
                   <td>{{number_format($o->total_amount)}}</td>
                   <td>{{$o->status}}</td>
                   <td>{{$o->created_at->format('d/m/Y')}}</td>
-                  <td><a href="{{url('admin/order/delete/'.$o->id)}}">Delete</a></td>                
+                  <td><a href="{{url('admin/order/delete/'.$o->id)}}" onclick="return ConfirmDelete();">Delete</a></td>
                 </tr>
                 @endforeach
             </tbody>
@@ -98,7 +98,7 @@
         </div>
       </div>
     </div>
-    
+
   </div>
   @endsection
 

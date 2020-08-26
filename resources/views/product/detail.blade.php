@@ -179,9 +179,10 @@
 							{{ csrf_field() }}
 							<div class="form-group">
 								<label for="comment"><h4>Comments:</h4></label>
-								<textarea id="comment" class="form-control" rows="4" placeholder="Write a comment..." name="content"></textarea><br>
-                                <input type="hidden" id="id_com" value="{{ $detail->id }}">
-								<input type="submit" name="comment" value="Send" id="send">
+								<textarea id="content" class="form-control" rows="4" placeholder="Write a comment..." name="content"></textarea><br>
+                                <input type="hidden" id="id_product" value="{{ $detail->id }}">
+                                <input type="hidden" id="email_user" value="{{ Auth::user()->email }}">
+								<input type="submit" name="comment" value="Send" id="sendComment">
 							</div>
 						</form>
 
@@ -193,10 +194,10 @@
 
 			</div>
         </div>
-        <div id="showComment">
+        <div id="showComment"></div>
         @foreach($comment as $c)
         <hr>
-        <div class="row">
+        <div class="row" id="rowData">
             <div class="col-md-2">
                 <img src="{{asset('image/avatar-default.jpg')}}" width="40px" height="40px">
             </div>
@@ -210,7 +211,7 @@
             </div>
         </div>
         @endforeach
-        </div>
+
         <div>
             {{$comment->links()}}
         </div>

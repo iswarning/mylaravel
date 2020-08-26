@@ -4,6 +4,7 @@
     <title>@yield('title')</title>
     <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf_token" content="{{ csrf_token() }}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}">
@@ -56,24 +57,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
-  <script type="text/javascript">
 
-    /*$(document).ready(function(){
-        $('#send').on('click',function(event){
-            event.preventDefault();
-            var comment = $('#comment').val();
-            var id_com = $('#id_com').val();
-            $.ajax({
-                url:'{{ url("product/detail/".$detail->id) }}',
-                method:'POST',
-                data:{comment:comment},
-                success:function(data){
-                    $('#showComment').html(data);
-                }
-            });
-        });
-    });*/
-</script>
+  <script src="{{ asset('js/main.js') }}"></script>
 </body>
 </html>
 

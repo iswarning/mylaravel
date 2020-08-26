@@ -45,7 +45,7 @@
                   <td>{{$row->HangSanXuat}}</td>
                   <td>
                   	<a href="{{ url('admin/product/edit/'.$row->id) }}">Edit</a>
-          			/<a href="{{ url('admin/product/delete/'.$row->id) }}">Delete</a></td>
+          			/<a href="{{ url('admin/product/delete/'.$row->id) }}" onclick="return ConfirmDelete();">Delete</a></td>
                 </tr>
                 @endforeach
          		</tbody>

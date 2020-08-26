@@ -39,9 +39,6 @@ class HomeController extends Controller
 	public function detail($id, Request $request)
 	{
         $detail = Product::find($id);
-        if($request->ajax()){
-            $comment = Comment::where('id_product',$id)->orderBy('created_at','DESC')->paginate(5)->render();
-        }
         $comment = Comment::where('id_product',$id)->orderBy('created_at','DESC')->paginate(5);
 		$slided = Slide::where('name','=','Slide Detail')->get();
 		return view('product.detail',compact('detail','comment','slided'));
@@ -50,21 +47,23 @@ class HomeController extends Controller
 	public function comment(Request $request, $id)
 	{
 
-		$email_user = Auth::user()->email;
-		$newComment = new Comment();
-		$newComment['content'] = $request->content;
-		$newComment['id_product'] = $request->id;
-		$newComment['email_user'] = $email_user;
-		$newComment->save();
+        if($request->ajax()){
+            $email_user = Auth::user()->email;
+            $newComment = new Comment();
+            $newComment['content'] = $request->content;
+            $newComment['id_product'] = $request->id;
+            $newComment['email_user'] = $email_user;
+            $newComment->save();
 
-        $last_id = Comment::find($newComment['id']);
+            $last_id = Comment::find($newComment['id']);
 
-        if($newComment){
-            /* Thông báo có comment mới */
-            app('App\Http\Controllers\SendNotification')->store('New Comments',$last_id->content);
+            if($newComment){
+                /* Thông báo có comment mới */
+                app('App\Http\Controllers\SendNotification')->store('New Comments',$last_id->content);
+            }
+
+            return response()->json($newComment);
         }
-
-		return Redirect::back();
 
 	}
 
