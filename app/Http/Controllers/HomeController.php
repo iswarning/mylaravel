@@ -6,47 +6,52 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\TypeProduct;
 use App\Comment;
-use View;
-use Redirect;
-use Auth;
-use Str;
-use Form;
-use Cart;
+use View, Redirect, Auth, Str, Form, Cart, DB;
 use Carbon\Carbon;
 use App\Slide;
 use App\User;
 use Pusher\Pusher;
 use App\Notifications\TestNotification;
 use Illuminate\Support\Facades\Route;
-use DB;
+use App\Spec;
+use App\Introduction;
 class HomeController extends Controller
 {
 	public function Home()
 	{
-		$menu = TypeProduct::all();
-		$topdeal = Product::all()->take(4);
-		$pkgiare = Product::where('MaLoai',2)->orderBy('Gia','desc')->take(4)->get();
-		$tablet = Product::where('MaLoai',3)->take(4)->get();
-		$laptop = Product::where('MaLoai',4)->take(4)->get();
-    	return view('layout.default',compact('menu','topdeal','pkgiare','tablet','laptop'));
+        $topdeal = Product::all()->take(4);
+        $pkgiare = Product::where('MaLoai',2)->orderBy('Gia','desc')->take(4)->get();
+        $tablet = Product::where('MaLoai',3)->take(4)->get();
+        $laptop = Product::where('MaLoai',4)->take(4)->get();
+
+        return view('layout.default',compact('topdeal','pkgiare','tablet','laptop'));
 	}
 
-	public function search(Request $request){
-		$search = Product::where('TenSanPham','REGEXP',$request->textsearch)->get();
-		return view('product.search',compact('search'));
+    public function search(Request $request)
+    {
+        $search = Product::where('TenSanPham','LIKE','%'.$request->textsearch.'%')->get();
+        return view('product.search',compact('search'));
 	}
+
+
 
 	public function detail($id, Request $request)
 	{
         $detail = Product::find($id);
         $comment = Comment::where('id_product',$id)->orderBy('created_at','DESC')->paginate(5);
-		$slided = Slide::where('name','=','Slide Detail')->get();
-		return view('product.detail',compact('detail','comment','slided'));
+
+        $spec = Spec::where('product_id',$id)->first();
+        if(!$spec){
+            $spec = Spec::where('product_id',1)->first();
+        }
+        $slided = Slide::where('name','Slide Detail')->where('product_id',$id)->get();
+        $introduction = Introduction::where('product_id',$id)->get();
+
+        return view('product.detail',compact('detail','comment','slided','spec','introduction'));
 	}
 
 	public function comment(Request $request, $id)
 	{
-
         if($request->ajax()){
             $email_user = Auth::user()->email;
             $newComment = new Comment();
@@ -64,8 +69,7 @@ class HomeController extends Controller
 
             return response()->json($newComment);
         }
-
-	}
+    }
 
 
     /* Thêm sản phẩm vào giỏ hàng */
@@ -75,7 +79,7 @@ class HomeController extends Controller
     	if($data->Instock < 1){
     		return redirect('shoppingcart/list')->withErrors("San Pham Het Hang");
     	}
-    	$cart=Cart::add([
+    	$cart = Cart::add([
     		'id' => $id,
     		'name' => $data->TenSanPham,
     		'qty' => 1,
@@ -86,21 +90,27 @@ class HomeController extends Controller
     	return redirect('shoppingcart/list');
     }
 
-    /*public function liveSearch(Request $request){
+
+    /* autocomplete search use ajax */
+    public function liveSearch(Request $request, $key){
         if($request->ajax()){
-            $search = '';
-            $data = Product::where('TenSanPham','REGEXP',$request->search)->get();
-            if($data){
-                foreach($data as $pros){
-                    $search .= '<tr>
-                    <td>' . $pros->id . '</td>
-                    <td>' . $pros->TenSanPham . '</td>
-                    <td>' . $pros->MoTa . '</td>
-                    <td>' . $pros->Gia . '</td>
-                    </tr>';
-                }
+            $data = Product::where('TenSanPham','LIKE','%'.$key.'%')->take(5)->get();
+            $search = "";
+            foreach($data as $row)
+            {
+                $search .= "
+                <a class='rowsearch' href='".url('product/detail/'.$row->id)."'>
+                    <div class='all'>
+                        <div class='left'><img id='img' src='".asset($row->HinhAnh)."' /></div>
+                        <div class='right'>
+                            <div class='top'><p>".$row->TenSanPham."</p></div>
+                            <div class='bottom'><p>".number_format($row->Gia)."</p></div>
+                        </div>
+                    </div>
+
+                </a><hr/>";
             }
-            return Response($search);
+            return response()->json($search);
         }
-    }*/
+    }
 }

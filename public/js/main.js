@@ -1,5 +1,8 @@
 
+
+/* Ajax Comments */
     $('#sendComment').on('click',function(e){
+
         e.preventDefault();
         var id_product = $('#id_product').val();
         var content = $('#content').val();
@@ -12,7 +15,7 @@
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:8000/mylaravel/public/product/detail/"+id_product,
+            url: $(location).attr("href"),
             data:{ content:content, id_product:id_product, email_user:email_user},
             success: function(data){
                 $('#showComment').append(`
@@ -36,4 +39,62 @@
             }
         });
     });
+
+
+/* Show hide introduction */
+    $('#viewmore').on('click',function(){
+        var display = $('.showContent').css('display');
+        if(display == "none"){
+            $('.showContent').show();
+        }else{
+            $('.showContent').hide();
+        }
+
+
+    });
+
+/* Click mini image change to main image */
+    $('#img1').on('click',function(){
+        $('#myimage').attr("src",$(this).attr("src"));
+    });
+
+    $('#img2').on('click',function(){
+        $('#myimage').attr("src",$(this).attr("src"));
+    });
+
+    $('#img3').on('click',function(){
+        $('#myimage').attr("src",$(this).attr("src"));
+    });
+
+
+
+/* AutoComplete Input Search */
+    $("#inputSearch").on('keyup',function(){
+        var keyword = $(this).val();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+            }
+        });
+
+        if(keyword.length == 0)
+        {
+            $("#showSearch").text("");
+
+        }
+        else
+        {
+            $.ajax({
+                url:"http://localhost:8000/mylaravel/public/liveSearch/"+keyword,
+                type:"GET",
+                success:function(data){
+                    $('#showSearch').html(data);
+                }
+            });
+        }
+
+    });
+
+
 

@@ -1,40 +1,74 @@
-<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="csrf_token" content="{{ csrf_token() }}">
-  <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
-    <style>
-        .list-group{
-            overflow-y: scroll;
-            height: 200px;
-        }
-    </style>
+    <meta name="csrf_token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
+
+    <script>
+        Pusher.logToConsole = true;
+        var pusher = new Pusher('f61399c0abc4029800a1', {
+            encrypted: true,
+            cluster: "ap1"
+        });
+
+        var channel  = pusher.subscribe("channel-chat");
+        channel.bind("ChatEvent",function(data){
+
+            $("#showMessages").append(`
+                <div class='rightMessage'>
+                    <span>${data.user.name}: </span>${data.message}
+                </div>
+            `);
+        });
+    </script>
 </head>
 <body>
-    <div class="container">
-        <div class="row" id="app">
-            <div class="offset-4 col-4">
-                <li class="list-group-item active">Chat room</li>
-                <ul class="list-group">
-                    <message
-                        v-for="value in chat.message"
-                        :key=value.index
-                    >
-                    @{{ value }}
-                    </message>
-                </ul>
-                <input type="text" class="form-control" placeholder="Type your message here..." v-model="message" @keyup.enter="send">
 
+    <?php
+        function menu($type, $parent = 0, $str = '')
+        {
+            foreach($type as $key => $row)
+            {
+                if($row->parent == $parent)
+                {
+                    echo "<option>".$str.$row->name."</option>";
+                    unset($type[$key]);
+                    menu($type,$row->id,$str.'|--');
+                }
+            }
+        }
+
+    ?>
+    <select id='show'>
+        <?php menu($type) ?>
+    </select>
+
+
+    <div class='container'>
+        <h5>Chat Application</h5>
+        <form method="POST" action="{{ url('chat') }}">
+            @csrf
+            <div id='showMessages'>
+                @foreach($messages as $message)
+                @if($message->user_id === Auth::id())
+                <div class='leftMessage'>
+                    <span>You: </span>{{ $message->message }}
+                </div>
+                @else
+                <div class='rightMessage'>
+                    <span>{{ App\User::find($message->user_id)->name }}: </span>{{ $message->message }}
+                </div><br>
+                @endif
+                @endforeach
             </div>
-        </div>
+
+            <input type='text' name='message' placeholder="Enter message...">
+            <input type='submit' name='sendMessage' id='sendMessage' value='Send'>
+        </form>
     </div>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
-
-  <script src="{{ asset('js/app.js') }}"></script>
 </html>
+
+
+

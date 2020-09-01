@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "axios": "^0.19",
-        "bootstrap": "^4.0.0-alpha.6",
+        "bootstrap": "^4.0.0",
         "cross-env": "^7.0",
         "jquery": "^3.2",
         "laravel-mix": "^5.0.1",
@@ -26,6 +26,8 @@
     "dependencies": {
         "laravel-echo": "^1.8.1",
         "pusher-js": "^7.0.0",
-        "vue": "^2.6.11"
+        "v-toaster": "^1.0.3",
+        "vue": "^2.6.11",
+        "vue-chat-scroll": "^1.4.0"
     }
 }

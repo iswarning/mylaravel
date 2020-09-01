@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\Introduction;
+use App\Slide;
 class DataSlide extends Seeder
 {
     /**
@@ -11,29 +12,14 @@ class DataSlide extends Seeder
      */
     public function run()
     {
-       	DB::table('slide')->insert([
-       		'name' => 'slide show 1',
-       		'src' => "image/slideshow1.png"
-       	]);
-       	DB::table('slide')->insert([
-       		'name' => 'slide show 2',
-       		'src' => "image/slideshow2.png"
-       	]);
-       	DB::table('slide')->insert([
-       		'name' => 'slide show 3',
-       		'src' => "image/slideshow3.png"
-       	]);
-       	DB::table('slide')->insert([
-       		'name' => 'slide show 4',
-       		'src' => "image/slideshow4.png"
-       	]);
-       	DB::table('slide')->insert([
-       		'name' => 'slide show 5',
-       		'src' => "image/slideshow5.png"
-       	]);
-       	DB::table('slide')->insert([
-       		'name' => 'slide show 6',
-       		'src' => "image/slideshow6.png"
-       	]);
+        for($i = 1; $i <= 4; $i++){
+            Slide::create([
+                'name' =>       'Slide Detail',
+                'src' =>        'image/11promax_s_'.$i.'.jpg',
+                'product_id' =>        45
+            ]);
+        }
+
+
     }
 }

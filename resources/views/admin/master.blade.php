@@ -99,20 +99,22 @@
             <h6 class="dropdown-header">New Alerts:</h6>
 
             <!-- Show Notifications -->
-            <div class="menu-notification">
+            <div class="new-notification"></div>
             @foreach(Auth::user()->notifications->take(5) as $notification)
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <span class="text-success">
-                <strong>
-                  {{ $notification->data['title'] }}
-                </strong>
-              </span>
-              <span class="small float-right text-muted">{{ Carbon\Carbon::parse($notification->created_at)->diffForHumans()}}</span>
-              <div class="dropdown-message large" style="width:300px;">{{ $notification->data['content'] }}</div>
-            </a>
-            @endforeach
+            <div class='old-notification'>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">
+                <span class="text-success">
+                    <strong>
+                    {{ $notification->data['title'] }}
+                    </strong>
+                </span>
+                <span class="small float-right text-muted">{{ Carbon\Carbon::parse($notification->created_at)->diffForHumans()}}</span>
+                <div class="dropdown-message large" style="width:300px;">{{ $notification->data['content'] }}</div>
+                </a>
             </div>
+            @endforeach
+
 
             <div class="dropdown-divider"></div>
             <a class="dropdown-item small" href="#">View all alerts</a>
@@ -177,9 +179,9 @@
             encrypted: true,
             cluster: "ap1"
         });
-        var channel = pusher.subscribe('NotificationEvent');
-        channel.bind('send-message', function(data) {
-            var newNotificationHtml = `
+        var channel = pusher.subscribe('send-message');
+        channel.bind('NotificationEvent', function(data) {
+            $('.new-notification').append(`
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">
               <span class="text-success">
@@ -190,9 +192,8 @@
               <span class="small float-right text-muted">{{ Carbon\Carbon::parse($notification->created_at)->diffForHumans()}}</span>
               <div class="dropdown-message large" style="width:300px;">${data.content}</div>
             </a>
-            `;
-
-            $('.menu-notification').prepend(newNotificationHtml);
+            `);
+            $(".old-notification").last().hide();
         });
 
 

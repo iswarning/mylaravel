@@ -1,33 +1,36 @@
 @extends('layout.master')
 
 @section('content')
+@if(!isset($detail))
+    {{ dd("San Pham Khong Ton Tai") }}
+@endif
 		<div class="row" style="margin: 50px 0;">
 			<div class="col-md-5 border-right">
 				<article>
+
 					<div class="img-big-wrap">
 						<div class="img-zoom-container">
 							<img class="img-fluid" id="myimage" src="{!! asset($detail->HinhAnh) !!}">
 						</div>
-					</div>
+					</a>
 					<div class="img-small-wrap">
 						<div class="img-gallery">
-							<a href="#" onclick="showImage1()">
+							<a href="javascript:void(0)">
 								<img id="img1" class="img-fluid" src="{!! asset($detail->HinhAnh) !!}">
 							</a>
 						</div>
 						<div class="img-gallery">
-							<a href="#" onclick="showImage2()">
+							<a href="javascript:void(0)">
 								<img id="img2" class="img-fluid" src="{!! asset($detail->HinhCT1) !!}">
 							</a>
 						</div>
 						<div class="img-gallery">
-							<a href="#" onclick="showImage3()">
+							<a href="javascript:void(0)">
 								<img id="img3" class="img-fluid" src="{!! asset($detail->HinhCT2) !!}">
 							</a>
 						</div>
 					</div>
 				</article>
-
 			</div>
 			<div class="col-md-7" style="padding-left: 50px">
 				<form action="{{url('shoppingcart/add/'.$detail->MaSanPham)}}" method="POST">
@@ -61,25 +64,19 @@
 		</div>
 		<hr width="100%" />
 		<div class="row">
-			<div class="col-md-7">
+			<div class="col-md-8">
 				<div class="col-md-12">
 					<h3>Giới thiệu sản phẩm</h3>
 				</div>
 				<div id="demo" class="carousel slide" data-ride="carousel">
 					<ul class="carousel-indicators">
-						<li data-target="#demo" data-slide-to="0" class="active"></li>
-						<li data-target="#demo" data-slide-to="1"></li>
-						<li data-target="#demo" data-slide-to="2"></li>
-						<li data-target="#demo" data-slide-to="3"></li>
-						<li data-target="#demo" data-slide-to="4"></li>
-						<li data-target="#demo" data-slide-to="5"></li>
-						<li data-target="#demo" data-slide-to="6"></li>
-						<li data-target="#demo" data-slide-to="7"></li>
-						<li data-target="#demo" data-slide-to="8"></li>
-					</ul>
+                    @foreach($slided as $key => $value)
+						<li data-target="#demo" data-slide-to="{{ $key }}" @if($key == 0) class="active" @endif></li>
+                    @endforeach
+                    </ul>
 					<div class="carousel-inner">
-						@foreach($slided as $s)
-						<div class="carousel-item <?php if($s->id = 8){echo "active";} ?>">
+						@foreach($slided as $key => $s)
+						<div class="carousel-item @if($key == 0) active @endif">
 							<img src="{{ asset($s->src)}}" alt="{{$s->alt}}" width="100%" height="100%">
 						</div>
 						@endforeach
@@ -90,86 +87,129 @@
 					<a class="carousel-control-next" href="#demo" data-slide="next">
 						<span class="carousel-control-next-icon"></span>
 					</a>
-				</div>
+                </div>
+                <div class='col-md-12'>
+                    @foreach($introduction as $key => $row)
+                    @if($key == 0)
+                        <span>&nbsp;</span>
+                        <h3 style='text-align:center;'>{{ $row->title }}</h3>
+                        <p class='content'>{!! $row->content !!}</p>
+                        @if(!empty($row->image))
+                        <img src='{{ asset($row->image) }}' width="700px" height="400px"/>
+                        @endif
+                        <a href="javascript:void(0)" id='viewmore'>View more...</a>
 
-				<div class="col-md-12">
+                        <br>
+                    @else
+                    <div class='showContent'>
+                        <span>&nbsp;</span>
+                            <h3 style='font-weight:bold;'>{{ $row->title }}</h3>
+                        <span>&nbsp;</span>
+                        @if(isset($row->image))
+                        <img src='{{ asset($row->image) }}' width="700px" height="400px"/>
+                        @endif
+                        <span>&nbsp;</span>
+                        <p>{{ $row->content }}</p>
+                    </div>
+                    @endif
+                    @endforeach
 
+                </div>
 
-
-				</div>
 			</div>
-			<div class="col-md-5">
-				<div class="row">
-					<div class="col-md-12">
-						<h3>Thông số kỹ thuật</h3>
-					</div>
-					<hr width="90%" />
+			<div class="col-md-4">
+                <style>
+                    #specs div{font-size: 15px;}
+                </style>
+				<div class="row" id='specs'>
+					<div class="col-md-12" >
+						<h4>Thông số kỹ thuật</h4>
+                    </div>
+
+					<hr width="100%" />
 					<div class="col-sm-4">
 						Màn hình:
 					</div>
 					<div class="col-sm-8">
-						Super AMOLED, 5.6", HD+
+						{!! $spec->screen !!}
 					</div>
-					<hr width="90%" />
-					<div class="col-sm-4">
-						Hệ điều hành:
-					</div>
-					<div class="col-sm-8">
-						Android 8.0 (Oreo)
-					</div>
-					<hr width="90%" />
-					<div class="col-sm-4">
-						Camera sau:
-					</div>
-					<div class="col-sm-8">
-						16 MP
-					</div>
-					<hr width="90%" />
+
+                    <hr width="100%" />
 					<div class="col-sm-4">
 						Camera trước:
 					</div>
 					<div class="col-sm-8">
-						16 MP
-					</div>
-					<hr width="90%" />
+						{!! $spec->cam_front !!}
+                    </div>
+
+                    <hr width="100%" />
 					<div class="col-sm-4">
-						CPU:
+						Camera sau:
 					</div>
 					<div class="col-sm-8">
-						Exynos 7870 8 nhân 64-bit
-					</div>
-					<hr width="90%" />
+						{!! $spec->cam_rear !!}
+                    </div>
+
+                    <hr width="100%" />
 					<div class="col-sm-4">
 						RAM:
 					</div>
 					<div class="col-sm-8">
-						3 GB
-					</div>
-					<hr width="90%" />
+						{!! $spec->ram !!}
+                    </div>
+
+                    <hr width="100%" />
 					<div class="col-sm-4">
 						Bộ nhớ trong:
 					</div>
 					<div class="col-sm-8">
-						32 GB
-					</div>
-					<hr width="90%" />
+						{!! $spec->storage !!}
+                    </div>
+
+                    <hr width="100%" />
 					<div class="col-sm-4">
-						Thẻ SIM:
+						CPU:
 					</div>
 					<div class="col-sm-8">
-						2 Nano SIM, Hỗ trợ 4G
+						{!! $spec->cpu !!}
+                    </div>
+
+                    <hr width="100%" />
+					<div class="col-sm-4">
+						GPU:
 					</div>
-					<hr width="90%" />
+					<div class="col-sm-8">
+						{!! $spec->gpu !!}
+                    </div>
+
+                    <hr width="100%" />
 					<div class="col-sm-4">
 						Dung lượng pin:
 					</div>
 					<div class="col-sm-8">
-						3000 mAh
+						{!! $spec->pin !!}
+                    </div>
+
+                    <hr width="100%" />
+					<div class="col-sm-4">
+						Hệ điều hành:
 					</div>
+					<div class="col-sm-8">
+						{!! $spec->os !!}
+                    </div>
+
+                    <hr width="100%" />
+					<div class="col-sm-4">
+						Thẻ SIM:
+					</div>
+					<div class="col-sm-8">
+						{!! $spec->sim !!}
+                    </div>
+
 				</div>
 			</div>
 		</div>
-	<hr width="80%" />
+	<hr width="100%" />
 		<div class="row">
 			<div class="col-md-12">
 				<!-- Tab panes -->
@@ -181,7 +221,7 @@
 								<label for="comment"><h4>Comments:</h4></label>
 								<textarea id="content" class="form-control" rows="4" placeholder="Write a comment..." name="content"></textarea><br>
                                 <input type="hidden" id="id_product" value="{{ $detail->id }}">
-                                <input type="hidden" id="email_user" value="{{ Auth::user()->email }}">
+                                @if(Auth::check())<input type="hidden" id="email_user" value="{{ Auth::user()->email }}">@endif
 								<input type="submit" name="comment" value="Send" id="sendComment">
 							</div>
 						</form>

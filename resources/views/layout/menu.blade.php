@@ -38,9 +38,9 @@
 @if(\Route::current()->getName() == "home")
   <div id="demo" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
-        @foreach($slide as $s)
+        @foreach($slide as $key => $s)
         <div class="carousel-item
-          <?php if($s->id == 1) echo 'active'; ?>
+          @if($key === 0) active @endif
         ">
           <a  href="#"><img class="img-fluid" src="{{asset($s->src)}}" alt="{{$s->alt}}" width="100%" height="100%"></a>
         </div>
@@ -56,29 +56,42 @@
     </div>
 @endif
 <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-  <div class="container">
-  <ul class="navbar-nav">
-        @foreach($menu as $menu)
-          <li class="nav-item" style="padding: 5px">
-            <a class="nav-link" href="{{url('product/cate/'.$menu->id)}}"> {!! $menu->name !!} </a>
-          </li>
-          @endforeach
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  <div class="collapse navbar-collapse container" id="collapsibleNavbar">
+    <ul class="navbar-nav" id='menu-parent'>
+
+
+            @foreach($menus as $row)
+            <li class="nav-item" style="padding: 5px">
+                <a class="nav-link" href="{{ url('product/cate/'.$row->id) }}"> {{ $row->name }} </a>
+            </li>
+            @endforeach
+
       <li class="nav-item" style="padding: 5px">
           <a class="nav-link" href="#"> Đồng hồ thông minh </a>
         </li>
         <li class="nav-item" style="padding: 5px">
           <a class="nav-link" href="#"> Máy cũ giá rẻ </a>
         </li>
-        <li class="nav-item" style="padding: 5px">
-          <a class="nav-link" href="#"> Sim, Thẻ cào </a>
+
+        <li class="nav-item" style="padding: 5px;">
+            <form method="POST" class="form-inline " action="{{ url('product/search') }}" >
+                @csrf
+                <input class="form-control mr-sm-2" type="text" placeholder="Search for..." name="textsearch" id='inputSearch' style='position:relative;display:inline-block;'>
+
+                <button class="btn btn-success" type="submit"><i class="fa fa-search"></i></button>
+
+            </form>
+            <div id='showSearch' style="position: absolute;background-color: white;width:300px;max-width: 500px;z-index:1;"></div>
         </li>
+
   </ul>
-  <form method="POST" class="form-inline " action="{{ url('product/search') }}">
-    @csrf
-      <input class="form-control mr-sm-2" type="text" placeholder="Search for..." name="textsearch">
-      <button class="btn btn-success" type="submit">Search</button>
-    </form>
+
+
   </div>
+
 </nav>
 
 

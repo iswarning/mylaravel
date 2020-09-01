@@ -18,14 +18,13 @@ class EditController extends Controller
     	$validator = $request->validate([
     		'name' => 'required|max:255',
     		'email' => 'required',
-    		'pass' => 'required|min:6|max:20|confirmed'
+    		'pass' => 'required|min:6'
     	],[
     		'name.required' => 'Name not empty',
     		'email.required' => 'Email not empty',
     		'pass.required' => 'Password not empty',
     		'name.max' => 'Name not exceed 255 character',
     		'pass.min' => 'Password have at least 6 character',
-    		'pass.max' => 'Name not exceed 255 character'
     	]);
 
         if($request->name === "admin"){

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 /* Home Page */
 Route::get('/home','HomeController@Home')->name('home');
 Route::group(['prefix'=>'product'],function(){
@@ -89,5 +90,11 @@ Route::group(['middleware'=>'guest'],function(){
 //Route::get('notification', 'SendNotification@create')->name('notification.create');
 //Route::post('notification', 'SendNotification@store')->name('notification.store');
 
-/* Chat Box */
-Route::get('/chat','ChatController@index');
+
+
+
+
+Route::get('/liveSearch/{key}','HomeController@liveSearch');
+
+Route::get('chat', 'ChatController@index');
+Route::post('chat', 'ChatController@store');

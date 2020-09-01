@@ -73,7 +73,7 @@ class LoginController extends Controller
 
             /* Thông báo tạo user mới */
             app('App\Http\Controllers\SendNotification')->store('New Users',$last_user->email);
-            return "Đăng ký thành công";
+            return dd("Đăng ký thành công");
         }else{
             return $validated;
         }

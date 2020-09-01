@@ -1,5 +1,5 @@
 *{
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-size: 16px;
   box-sizing: border-box;
 }
@@ -32,4 +32,106 @@ h6.card-text{
 .img-gallery{
   margin-left: 100px;
   margin-top: 10px;
+}
+#img{
+    height: 40px;
+    width: 40px;
+    float: left;
+}
+.right p
+{
+    margin:0;
+    padding: 0;
+}
+div.left
+{
+    width: 30%;
+}
+div.left{
+    width: 70%;
+}
+.rowsearch
+{
+    height: 62px;
+    font-size: 15px;
+}
+.bottom{
+    color: red;
+}
+.top{
+    font-weight: bold;
+    color: black;
+}
+.showContent{
+    display:none;
+}
+
+.chat {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .chat li {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+  }
+
+  .chat li .chat-body p {
+    margin: 0;
+    color: #777777;
+  }
+
+  .panel-body {
+    overflow-y: scroll;
+    height: 350px;
+  }
+
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+  }
+  #showMessages{
+    border: 1px solid blanchedalmond;
+    border-radius:10px;
+    width: 300px;
+    height: 400px;
+    background-color:silver;
+    color:white;
+    overflow: scroll;
+}
+.leftMessage{
+    background-color: rgb(0, 153, 255);
+    width:70%;
+    height: 20px;
+    text-align: center;
+    margin:10px;
+}
+.rightMessage{
+    float: right;
+    background-color: rgb(0, 153, 255);
+    width:70%;
+    height: 20px;
+    text-align: center;
+}
+.rightMessage span{
+    color:red;
+}
+.leftMessage span{
+   color:yellow;
+}
+
+#showSearch{
+    color: blue;
 }

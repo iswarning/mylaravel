@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        
+
     }
 
     /**
@@ -29,8 +29,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('layout.menu',function($view){
-            $menu = TypeProduct::all();
-            $view->with('menu',$menu);
+            $menus = TypeProduct::where('parent',0)->get();
+            $view->with('menus',$menus);
         });
         view()->composer('layout.menu',function($view){
             $slide = Slide::where('name','=','slide show')->get();
@@ -44,6 +44,6 @@ class AppServiceProvider extends ServiceProvider
             $index = Product::all();
             $view->with('index',$index);
         });
-        
+
     }
 }
