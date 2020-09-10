@@ -11,13 +11,16 @@
         <li class="breadcrumb-item active">Product</li>
       </ol>
 
-      <!-- Example DataTables Card-->
-      @csrf
-      <div class="card mb-3">
-        <div class="card-header">
-          <i class="fa fa-table"></i> Data Table Products</div>
+      <!-- Example DataTables Card-->    
+  <div class="card mb-3">
+
+    <div class="card-header">
+          <i class="fa fa-table"></i> Data Table Products
+    </div>
+
         <div class="card-body">
-          <div class="table-responsive">
+          <div class="table-responsive" >
+            <div id='showData'>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
@@ -33,6 +36,7 @@
                 </tr>
               </thead>
               <tbody>
+              
               	@foreach($listP as $row)
                 <tr>
                   <td>{{$row->id}}</td>
@@ -48,19 +52,24 @@
           			/<a href="{{ url('admin/product/delete/'.$row->id) }}" onclick="return ConfirmDelete();">Delete</a></td>
                 </tr>
                 @endforeach
-         		</tbody>
+              
+              </tbody>
             </table>
+            </div>
+
             <div>
             	<a href="{{url('admin/product/add')}}">Add Products</a>
             </div>
+
             <div style="float: right;">
             	{{ $listP->links() }}
             </div>
+
           </div>
         </div>
+
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-      </div>
-    </div>
+  </div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">

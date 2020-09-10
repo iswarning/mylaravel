@@ -141,19 +141,8 @@
 </nav>
 
 	@yield('content')
-    <script type="text/javascript">
-      function ConfirmDelete()
-      {
-          var check = confirm('Do you want delete ?');
-          if(check == true){
-            return true;
-          }else{
-            return false;
-          }
-      }
 
 
-    </script>
 	<!-- Bootstrap core JavaScript-->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -172,8 +161,9 @@
     <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 
 
-    <script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function(){
+
         /* Pusher Notification*/
         var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
             encrypted: true,
@@ -181,7 +171,7 @@
         });
         var channel = pusher.subscribe('send-message');
         channel.bind('NotificationEvent', function(data) {
-            $('.new-notification').append(`
+            $('.new-notification').prepend(`
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">
               <span class="text-success">
@@ -196,24 +186,34 @@
             $(".old-notification").last().hide();
         });
 
-
+        /* Alert Confirm Delete  */
+        function ConfirmDelete()
+        {
+            var check = confirm('Do you want delete ?');
+            if(check == true){
+              return true;
+            }else{
+              return false;
+            }
+        }
 
         /* Ajax Pagination */
-        /*$('.page-link').on('click',function(event){
+        $('.page-link').on('click',function(event){
             event.preventDefault();
             var page = $(this).attr('href').split('page=')[1];
             fetch_data(page);
         });
         function fetch_data(page){
             $.ajax({
-                url:'dashboard?page='+page,
+                url: $(location).attr('href')+'?page='+page,
+                dataType: 'html',
                 success:function(data){
-                    $('#dataTable').html(data);
+                    $('#showData').html(data);
                 }
             });
-        }*/
+        }
     });
-    </script>
+</script>
 
 
 </body>

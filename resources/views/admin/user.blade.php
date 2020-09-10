@@ -25,6 +25,7 @@
           <i class="fa fa-table"></i> Data Table Example</div>
         <div class="card-body">
           <div class="table-responsive">
+          <div id='showData'>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
@@ -48,8 +49,9 @@
                     <a href="user/edit/{{$row->id}}">Edit</a>/<a href="user/delete/{{$row->id}}" onclick="return ConfirmDelete();">Delete</a></td>
                   </tr>
                 @endforeach
-         		</tbody>
+              </tbody>
             </table>
+          </div>
             <div>
             	<a href="{{asset('admin/user/add')}}">Add Users</a>
             </div>

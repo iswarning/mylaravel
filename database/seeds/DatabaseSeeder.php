@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Seeder;
 use App\Introduction;
+use App\Product;
+use App\Spec;
+use App\Slide;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -11,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(DataSlide::class);
+
 
     }
 }

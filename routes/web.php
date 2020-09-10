@@ -17,12 +17,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/home','HomeController@Home')->name('home');
 Route::group(['prefix'=>'product'],function(){
 	Route::get('/detail/{id}','HomeController@detail');
-	Route::post('/detail/{id}','HomeController@comment')->middleware('guest');
+	Route::post('/detail/{id}','HomeController@comment')->middleware('guest')->name('product.comment');
 	//Route::post('/detail/{id}','HomeController@reply')->middleware('guest');
-	Route::get('/cate/{id}','CategoryController@cate');
-	Route::post('/search','HomeController@search');
-});
+    Route::get('/cate/{id}','CategoryController@cate');
+    //Route::post('/search','HomeController@search');
 
+});
+Route::get('/check','product\SearchController@index');
+Route::post('/check','product\SearchController@checkSearch')->name('postCheck');
 
 /* Login */
 Route::get('login','LoginController@Login');
@@ -39,7 +41,7 @@ Route::post('register','LoginController@postRegister');
 
 /* Admin System */
 Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
-    Route::get('dashboard','DashBoardController@index');
+	Route::get('dashboard','DashBoardController@index');
 	Route::group(['prefix'=>'product'],function(){
 		Route::get('/edit/{id}','product\EditController@edit');
 		Route::post('/edit/{id}','product\EditController@postEdit');
@@ -84,17 +86,7 @@ Route::group(['middleware'=>'guest'],function(){
 	Route::post('order','OrderController@newOrder');
 });
 
-
-
-/* Test Notification */
-//Route::get('notification', 'SendNotification@create')->name('notification.create');
-//Route::post('notification', 'SendNotification@store')->name('notification.store');
-
-
-
-
-
-Route::get('/liveSearch/{key}','HomeController@liveSearch');
+Route::get('/liveSearch/{key}','HomeController@liveSearch')->name('liveSearch');
 
 Route::get('chat', 'ChatController@index');
-Route::post('chat', 'ChatController@store');
+Route::post('chat', 'ChatController@store')->name('postChat');

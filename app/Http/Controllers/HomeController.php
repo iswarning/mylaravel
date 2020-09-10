@@ -53,11 +53,10 @@ class HomeController extends Controller
 	public function comment(Request $request, $id)
 	{
         if($request->ajax()){
-            $email_user = Auth::user()->email;
             $newComment = new Comment();
-            $newComment['content'] = $request->content;
-            $newComment['id_product'] = $request->id;
-            $newComment['email_user'] = $email_user;
+            $newComment->content = $request->content;
+            $newComment->id_product = $request->id;
+            $newComment->email_user = $request->email;
             $newComment->save();
 
             $last_id = Comment::find($newComment['id']);
@@ -67,7 +66,7 @@ class HomeController extends Controller
                 app('App\Http\Controllers\SendNotification')->store('New Comments',$last_id->content);
             }
 
-            return response()->json($newComment);
+            return view('show',['comment' => $newComment]);
         }
     }
 
@@ -110,7 +109,7 @@ class HomeController extends Controller
 
                 </a><hr/>";
             }
-            return response()->json($search);
+            return $search;
         }
     }
 }

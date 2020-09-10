@@ -33,7 +33,7 @@
 				</article>
 			</div>
 			<div class="col-md-7" style="padding-left: 50px">
-				<form action="{{url('shoppingcart/add/'.$detail->MaSanPham)}}" method="POST">
+				<form action="{{url('shoppingcart/add/'.$detail->id)}}" method="POST">
 					{{ csrf_field() }}
 					<h3 class="product-title">{!! $detail->TenSanPham !!}</h3>
 					<p class="product-description">
@@ -94,7 +94,7 @@
                         <span>&nbsp;</span>
                         <h3 style='text-align:center;'>{{ $row->title }}</h3>
                         <p class='content'>{!! $row->content !!}</p>
-                        @if(!empty($row->image))
+                        @if($row->image != "")
                         <img src='{{ asset($row->image) }}' width="700px" height="400px"/>
                         @endif
                         <a href="javascript:void(0)" id='viewmore'>View more...</a>
@@ -105,7 +105,7 @@
                         <span>&nbsp;</span>
                             <h3 style='font-weight:bold;'>{{ $row->title }}</h3>
                         <span>&nbsp;</span>
-                        @if(isset($row->image))
+                        @if($row->image != "")
                         <img src='{{ asset($row->image) }}' width="700px" height="400px"/>
                         @endif
                         <span>&nbsp;</span>
@@ -215,14 +215,14 @@
 				<!-- Tab panes -->
 				<div class="tab-content">
 					<div id="menu1" class="container tab-pane active"><br>
-						<form method="POST" action="">
-							{{ csrf_field() }}
+						<form method="POST" action="{{route('product.comment',$detail->id)}}">
+							@csrf
 							<div class="form-group">
 								<label for="comment"><h4>Comments:</h4></label>
-								<textarea id="content" class="form-control" rows="4" placeholder="Write a comment..." name="content"></textarea><br>
+								<textarea id="content" class="form-control" rows="4" placeholder="Write a comment..."></textarea><br>
                                 <input type="hidden" id="id_product" value="{{ $detail->id }}">
                                 @if(Auth::check())<input type="hidden" id="email_user" value="{{ Auth::user()->email }}">@endif
-								<input type="submit" name="comment" value="Send" id="sendComment">
+								<input type="submit"  value="Send" id="sendComment">
 							</div>
 						</form>
 
@@ -235,26 +235,26 @@
 			</div>
         </div>
         <div id="showComment"></div>
-        @foreach($comment as $c)
-        <hr>
-        <div class="row" id="rowData">
-            <div class="col-md-2">
-                <img src="{{asset('image/avatar-default.jpg')}}" width="40px" height="40px">
-            </div>
-            <div class="col-md-8">
-                <h5><b>{{$c->email_user}}</b></h5>
-                <p>{{$c->content}}</p>
-            </div>
-            <div class="col-md-2">
-                {{Carbon\Carbon::parse($c->created_at)->diffForHumans()}}
-                <br><a href="#" onclick="reply()" id="clickme">Reply</a>
-            </div>
-        </div>
-        @endforeach
+			@foreach($comment as $c)
+			<hr>
+			<div class="row" id="rowData">
+				<div class="col-md-2">
+					<img src="{{asset('image/avatar-default.jpg')}}" width="40px" height="40px">
+				</div>
+				<div class="col-md-8">
+					<h5><b>{{$c->email_user}}</b></h5>
+					<p>{{$c->content}}</p>
+				</div>
+				<div class="col-md-2">
+					{{Carbon\Carbon::parse($c->created_at)->diffForHumans()}}
+					<br><a href="#" onclick="reply()" id="clickme">Reply</a>
+				</div>
+			</div>
+			@endforeach
 
-        <div>
-            {{$comment->links()}}
-        </div>
+			<div>
+				{{$comment->links()}}
+			</div>
 
 
-@endsection
+	@endsection

@@ -24,9 +24,10 @@ class ChatController extends Controller
 
     public function store(Request $request)
     {
-
+        if($request->ajax())
+        {
             $user = User::findOrFail(Auth::id());
-            $message = $request->message;
+            $message = $request->ajax_message;
 
             event(new ChatEvent($user,$message));
 
@@ -36,7 +37,9 @@ class ChatController extends Controller
             $newMessage->is_read = 0;
             $newMessage->save();
 
-            return back();
+            return $newMessage;
+        }
+            
 
     }
 

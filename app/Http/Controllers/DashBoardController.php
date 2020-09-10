@@ -12,7 +12,7 @@ class DashBoardController extends Controller
     {
         $listP = Product::paginate(5);
         if($request->ajax()){
-    	    return view('admin.dashboard',compact('listP'))->render();
+    	    return view('show',compact('listP'))->render();
         }
         return view('admin.dashboard',compact('listP'));
     }

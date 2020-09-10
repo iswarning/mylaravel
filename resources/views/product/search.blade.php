@@ -1,6 +1,8 @@
 @extends('layout.master')
 @section('content')
+
 <div class="row">
+
     @foreach($search as $row)
     <form action="{{url('shoppingcart/add/'.$row->id)}}" method="POST">
       {!! csrf_field() !!}
