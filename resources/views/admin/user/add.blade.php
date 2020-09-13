@@ -6,20 +6,22 @@
 <div class="content-wrapper">
   	<div class="container-fluid">
   		@if($errors->any())
-        <div class="alert alert-danger">{{$errors->first()}}</div>
+	        @foreach ($errors->all() as $error)
+		        <div class="alert alert-danger">{{ $error }}</div>
+		    @endforeach
       @endif
 		
 	  <div class="form-group">
 	    <label for="email">Name:</label>
-	    <input type="text" class="form-control" name="name" id="email">
+	    <input type="text" class="form-control" name="name" id="name">
 	  </div>
 	  <div class="form-group">
 	    <label for="pwd">Email:</label>
-	    <input type="email" class="form-control" name="email" id="pwd">
+	    <input type="email" class="form-control" name="email" id="email">
 	  </div>
 	  <div class="form-group">
 	    <label for="pr">Password:</label>
-	    <input type="password" class="form-control" name="pass" id="pr">
+	    <input type="password" class="form-control" name="pass" id="pwd">
 	  </div>
 	  <div class="form-group">
 	    <label for="pr">Role:</label>

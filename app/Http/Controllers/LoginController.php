@@ -72,7 +72,7 @@ class LoginController extends Controller
         if($register){
 
             /* Thông báo tạo user mới */
-            app('App\Http\Controllers\SendNotification')->store('New Users',$last_user->email);
+            app('App\Http\Controllers\Backend\Notification\SendNotification')->store('New Users',$last_user->email);
             return dd("Đăng ký thành công");
         }else{
             return $validated;
@@ -88,7 +88,7 @@ class LoginController extends Controller
     public function callback($provider){
         $getInfo = Socialite::driver($provider)->user();
         $user = $this->createUser($getInfo,$provider);
-        auth()->login($user);
+        Auth::login($user);
         return redirect()->to('/home');
     }
     function createUser($getInfo,$provider){
@@ -101,6 +101,9 @@ class LoginController extends Controller
             $user->provider_id = $getInfo->id;
             $user->role = 2;
             $user->save();
+
+            /* Thông báo tạo user mới */
+            app('App\Http\Controllers\Backend\Notification\SendNotification')->store('New '.$provider.' Users',$last_user->email);
         }
         return $user;
     }

@@ -31,7 +31,7 @@
                   <th>Image</th>
                   <th>Image1</th>
                   <th>Image2</th>
-                  <th>Producer</th>
+                  <th>Brand</th>
                   <th>Action</th>
                 </tr>
               </thead>

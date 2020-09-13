@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Cart;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\OrderProduct;
 use App\Order;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Cart;
 use App\Product;
 class OrderController extends Controller
 {
@@ -65,40 +65,4 @@ class OrderController extends Controller
     	return redirect('/home');
     }
 
-    public function orderAdmin()
-    {
-        $order = Order::orderBy('id','DESC')->paginate(5);
-        return view('admin.order',compact('order'));
-    }
-
-    public function orderdetailAdmin()
-    {
-        $order = OrderProduct::orderBy('id','DESC')->paginate(5);
-        return view('admin.orderdetail',compact('order'));
-    }
-
-    public function deleteOrder($id)
-    {
-        $order = Order::find($id);
-
-        $orderdetail = OrderProduct::where('order_id','=',$order->id)->get();
-        foreach($orderdetail as $o){
-            $o->delete();
-        }
-
-        $order->delete();
-        return back();
-    }
-
-    public function deleteOrderDetail($id)
-    {
-        $order = OrderProduct::find($id);
-        $order->delete();
-        $id_order = Order::where('id',$order->order_id)->first();
-        $checkexist = OrderProduct::where('order_id',$id_order)->get();
-        if(empty($checkexist)){
-            $id_order->delete();
-        }
-        return back();
-    }
 }

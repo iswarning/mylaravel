@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\TypeProduct;
 use App\Comment;
-use View, Redirect, Auth, Str, Form, Cart, DB;
 use Carbon\Carbon;
 use App\Slide;
 use App\User;
 use Pusher\Pusher;
 use App\Notifications\TestNotification;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
 use App\Spec;
 use App\Introduction;
 class HomeController extends Controller
@@ -63,30 +65,11 @@ class HomeController extends Controller
 
             if($newComment){
                 /* Thông báo có comment mới */
-                app('App\Http\Controllers\SendNotification')->store('New Comments',$last_id->content);
+                app('App\Http\Controllers\Backend\Notification\SendNotification')->store('New Comments',$last_id->content);
             }
 
             return view('show',['comment' => $newComment]);
         }
-    }
-
-
-    /* Thêm sản phẩm vào giỏ hàng */
-	public function add($id)
-    {
-    	$data = Product::find($id);
-    	if($data->Instock < 1){
-    		return redirect('shoppingcart/list')->withErrors("San Pham Het Hang");
-    	}
-    	$cart = Cart::add([
-    		'id' => $id,
-    		'name' => $data->TenSanPham,
-    		'qty' => 1,
-    		'price' => $data->Gia,
-    		'weight' => 550,
-    		'options' => ['img' => $data->HinhAnh]
-    	]);
-    	return redirect('shoppingcart/list');
     }
 
 

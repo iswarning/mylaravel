@@ -16,10 +16,22 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ url('admin/dashboard')}}"> Admin </a>
          </li>
+         @if(App\Order::where('user_id',Auth::id())->first() !== null )
+         <li class="nav-item">
+           <a class="nav-link" href="{{ url('shoppingcart/history')}}"> Order history </a>
+        </li>
+        @endif
          <li class="nav-item">
             <a class="nav-link" href="{{ url('logout')}}"> Logout </a>
          </li>
          @else
+
+         <li class="nav-item">
+            <a class="nav-link" href="{{ url('chat')}}"> Chat Room </a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" href="{{ url('shoppingcart/history')}}"> Order history </a>
+        </li>
         <li class="nav-item">
            <a class="nav-link" href="{{ url('logout')}}"> Logout </a>
         </li>
@@ -27,7 +39,7 @@
         @endif
 
         <li class="nav-item">
-          <a class="nav-link" href="{{ url('shoppingcart/list')}}">Shopping Cart({{Cart::count()}})</a>
+          <a class="nav-link" href="{{ url('shoppingcart/list')}}"><i class='fa fa-shopping-cart'></i>({{Cart::count()}})</a>
         </li>
         <li class="nav-item">
 
@@ -55,43 +67,34 @@
       </div>
     </div>
 @endif
-<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  <div class="collapse navbar-collapse container" id="collapsibleNavbar">
-    <ul class="navbar-nav" id='menu-parent'>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class='container'>
+            <a class="navbar-brand" href="{{ url('home') }}">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
 
 
             @foreach($menus as $row)
-            <li class="nav-item" style="padding: 5px">
-                <a class="nav-link" href="{{ url('product/cate/'.$row->id) }}"> {{ $row->name }} </a>
-            </li>
+                <li class="nav-item" style='padding:5px;'>
+                    <a class="nav-link" href="{{ url('product/cate/'.$row->id) }}"> {{ $row->name }} </a>
+                </li>
             @endforeach
 
-      <li class="nav-item" style="padding: 5px">
-          <a class="nav-link" href="#"> Đồng hồ thông minh </a>
-        </li>
-        <li class="nav-item" style="padding: 5px">
-          <a class="nav-link" href="#"> Máy cũ giá rẻ </a>
-        </li>
-
-        <li class="nav-item" style="padding: 5px;">
-            <form method="POST" class="form-inline " action="{{ url('product/search') }}" >
+              </ul>
+              <form method="POST" class="form-inline my-2 my-lg-0" action="{{ url('product/search') }}">
                 @csrf
-                <input class="form-control mr-sm-2" type="text" placeholder="Search for..." name="textsearch" id='inputSearch' style='position:relative;display:inline-block;'>
-
-                <button class="btn btn-success" type="submit"><i class="fa fa-search"></i></button>
-
+                <input class="form-control mr-sm-2 " type="search" placeholder="Search" name='textsearch' aria-label="Search" id='inputSearch' style='position:relative;display:inline-block;'>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              
             </form>
-            <div id='showSearch' style="position: absolute;background-color: white;width:300px;max-width: 500px;z-index:1;"></div>
-        </li>
+            <span id='showSearch' style="position: absolute;background-color: white;width:300px;max-width: 500px;z-index:99;"></span>
 
-  </ul>
-
-
-  </div>
-
+        </div>
+    </div>
 </nav>
-
 

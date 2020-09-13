@@ -35,7 +35,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Price</th>
-                        <th>Trademark</th>
+                        <th>Brand</th>
                     </tr>
                 </thead>
                 <tbody>

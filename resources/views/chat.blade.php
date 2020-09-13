@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta name="csrf_token" content="{{ csrf_token() }}">
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
     <style>
@@ -11,14 +11,42 @@
             width: 300px;
             overflow: scroll;
             overflow-x: hidden;
-            
+
         }
         .title{
             font-weight: bold;
         }
+
+        .menu1{
+            position: absolute;
+        }
+
+        .menu2{
+            position: relative;
+            display:none;
+        }
+
+        .menu1>li:hover .menu2{
+            display: block;
+        }
+
+        .menu3{
+            display: none;
+        }
+
+
     </style>
     <script>
-    
+            /*$(document).ready(function(){
+                $("#message").on('keyup',function(){
+                    if($(this).val().length !== 0)
+                    {
+                        $("#typing").html("typing...");
+                    }else{
+                        $("#typing").html("");
+                    }
+                });
+            });*/
         Pusher.logToConsole = true;
         var pusher = new Pusher('{{env('PUSHER_APP_KEY')}}', {
             encrypted: true,
@@ -38,9 +66,11 @@
                 </div><br>
             `);
         });
-    
-        
-        
+
+
+
+
+
     </script>
 </head>
 <body>
@@ -52,20 +82,18 @@
             {
                 if($row->parent == $parent)
                 {
-                    echo "<option>".$str.$row->name."</option>";
+                    echo "<li>".$row->name.'<ul><li>'.$str.'</li></ul></li>';
                     unset($type[$key]);
-                    menu($type,$row->id,$str.'|--');
+                    menu($type,$row->id,$str.'--');
                 }
             }
         }
 
     ?>
-    <select id='show'>
-        <?php menu($type) ?>
-    </select>
-
 
     <div class='container'>
+
+
         <h2>Chat Application</h2>
         <form method="POST" action="{{ url('chat') }}">
             @csrf
@@ -81,7 +109,8 @@
                 </div><br>
                 @endif
                 @endforeach
-            </div>
+
+            </div><span id='typing'></span>
 
             <input type='text' name='message' placeholder="Enter message..." id='message'>
             <input type='submit' name='sendMessage' id='sendMessage' value='Send'>
@@ -90,15 +119,16 @@
 
     <script>
         $(document).ready(function(){
+
             $.ajaxSetup({
                 headers:{
                     'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
                 }
             });
+
             $("#sendMessage").on('click',function(e){
                 e.preventDefault();
                 var message = $("#message").val();
-
                 $.ajax({
                     url: '{{ route('postChat') }}',
                     data: {ajax_message:message},
@@ -107,6 +137,7 @@
                     success:function(response){
                         $("#message").val("");
                         $(".title").css('font-weight','normal');
+
                     }
                 });
             });
