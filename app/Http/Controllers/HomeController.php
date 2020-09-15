@@ -55,6 +55,7 @@ class HomeController extends Controller
 	public function comment(Request $request, $id)
 	{
         if($request->ajax()){
+
             $newComment = new Comment();
             $newComment->content = $request->content;
             $newComment->id_product = $request->id;

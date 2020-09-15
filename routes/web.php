@@ -23,8 +23,8 @@ Route::group(['prefix'=>'product'],function(){
     Route::post('/search','HomeController@search');
 
 });
-Route::get('/check','product\SearchController@index');
-Route::post('/check','product\SearchController@checkSearch')->name('postCheck');
+Route::get('/check','SearchController@index');
+Route::post('/check','SearchController@checkSearch')->name('postCheck');
 
 /* Login */
 Route::get('login','LoginController@Login');
@@ -43,6 +43,7 @@ Route::post('register','LoginController@postRegister');
 Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
 	Route::get('dashboard','Backend\Product\ProductController@index');
 	Route::group(['prefix'=>'product'],function(){
+		Route::get('/list','Backend\Product\ProductController@index');
 		Route::get('/edit/{id}','Backend\Product\ProductController@show');
 		Route::post('/edit/{id}','Backend\Product\ProductController@update');
 		Route::get('/add','Backend\Product\ProductController@viewStore');

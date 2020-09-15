@@ -1,4 +1,4 @@
-@extends('admin.master')
+@extends('admin.layout.app')
 <!DOCTYPE html>
 <html lang="en">
 

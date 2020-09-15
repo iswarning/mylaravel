@@ -160,6 +160,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 
-    @include('admin.javascript')
+    @include('admin.layout.javascript')
 </body>
 </html>

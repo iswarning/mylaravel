@@ -1,4 +1,4 @@
-@extends('admin.master')
+@extends('admin.layout.app')
 @section('content')
 <form method="POST" action="">
 	{{ csrf_field() }}

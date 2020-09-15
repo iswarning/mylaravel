@@ -18,7 +18,7 @@ class ProductController extends Controller
         if($request->ajax()){
     	    return view('show',compact('listP'))->render();
         }
-        return view('admin.dashboard',compact('listP'));
+        return view('admin.product.list',compact('listP'));
     }
 
 

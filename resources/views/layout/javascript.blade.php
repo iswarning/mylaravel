@@ -1,3 +1,4 @@
+
 <script>
 $(document).ready(function() {
 
@@ -8,8 +9,9 @@ $(document).ready(function() {
     });
 
     /* Ajax Comments */
-    if({{ Auth::check() }})
-    {
+    
+    @if( Auth::check() && isset($detail))
+    
         $('#sendComment').on('click',function(e){
 
             e.preventDefault();
@@ -18,7 +20,7 @@ $(document).ready(function() {
             var email_user = $('#email_user').val();
 
             $.ajax({
-                url: $(location).attr('href'),
+                url: "{{ route('product.comment',$detail) }}",
                 type: "POST",
                 dataType: 'html',
                 data:{
@@ -29,10 +31,11 @@ $(document).ready(function() {
                 success: function(response){
                     $('#showComment').prepend(response);
                     $('#content').val("");
+                    $(".rowComment").last().hide();
                 }
             });
         });
-    }
+    @endif
 
 
 
@@ -85,27 +88,15 @@ $(document).ready(function() {
 
     });
 
+    function filter_data()
+    {
+        
+        
+    }
 
+    function get_filter()
 
-    $("#find").on('click',function(e){
-        e.preventDefault();
-        var cate = $("#cate").val();
-        var price = $("#price").val();
-        var sort = $("#sort").val();
-        $.ajax({
-            url:'{{ route('postCheck') }}',
-            type:'POST',
-            dataType: 'html',
-            data: {
-                cateA:cate,
-                priceA:price,
-                sortA:sort,
-            },
-            success:function(response){
-                $("#show").html(response);
-            }
-        });
-    });
+    
 });
 
 </script>

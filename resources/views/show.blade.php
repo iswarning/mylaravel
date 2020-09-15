@@ -25,8 +25,9 @@
 
 @elseif(isset($comment))
 
-<hr>
-<div class="row" id="rowData">
+
+<div class="row rowComment">
+    <hr>
     <div class="col-md-2">
         <img src="{{asset('image/avatar-default.jpg')}}" width="40px" height="40px">
     </div>

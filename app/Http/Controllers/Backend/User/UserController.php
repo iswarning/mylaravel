@@ -16,7 +16,7 @@ class UserController extends Controller
         if($request->ajax()){
             return view('show',['users' => $data]);
         }
-        return view('admin.user',compact('data'));
+        return view('admin.user.list',compact('data'));
     }
 
     /* Display view store */
