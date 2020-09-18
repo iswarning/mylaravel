@@ -1,19 +1,21 @@
 @extends('admin.layout.app')
 @section('content')
-<form method="POST" action="" enctype="multipart/form-data">
+<form method="POST" action="{{route('addProduct')}}" enctype="multipart/form-data">
 	{{ csrf_field() }}
 
 <div class="content-wrapper">
   	<div class="container-fluid">
+	  <div id='showAlert'>
   		@if($errors->any())
 	        @foreach ($errors->all() as $error)
 		        <div class="alert alert-danger">{{ $error }}</div>
 		    @endforeach
       @endif
+	  </div>
 	<div class="form-group">
 	<label for="email">Chọn Loại Sản Phẩm:</label><br>
 	@foreach($cate as $c)
-	<label class="radio-inline"><input type="radio" name="optradio" value="{{$c->id}}"
+	<label class="radio-inline"><input type="radio" id="optradio" value="{{$c->id}}"
 		<?php if($c->id == 1) { echo "checked";} ?>
 		> {{$c->name}} </label>
 	@endforeach
@@ -21,15 +23,15 @@
 
 	  <div class="form-group">
 	    <label for="email">Tên Sản Phẩm:</label>
-	    <input type="text" class="form-control" name="name" id="email">
+	    <input type="text" class="form-control" id="name" >
 	  </div>
 	  <div class="form-group">
 	    <label for="pwd">Mô Tả:</label>
-	    <textarea rows="3" class="form-control" name="mota" id="pwd"></textarea>
+	    <textarea rows="3" class="form-control" id="mota"></textarea>
 	  </div>
 	  <div class="form-group">
 	    <label for="pr">Giá:</label>
-	    <input type="text" class="form-control" name="price" id="pr">
+	    <input type="text" class="form-control" id="price">
 	  </div>
 	  <div class="form-group">
 	    <label for="img0">HìnhCT0:</label>
@@ -50,8 +52,8 @@
 	    <label for="pa">Hãng Sản Xuất:</label>
 	    <input type="text" class="form-control" name="pa" id="pa">
 	  </div>
-	  <button type="submit" class="btn btn-default">Add</button>
-	  <input action="action" onclick="window.history.go(-1); return false;" type="submit" value="Cancel"/>
+	  <button type="submit" class="btn btn-outline-success" id='add-pro'>Add</button>
+	  <input action="action" onclick="window.history.go(-1); return false;" type="submit" value="Cancel" class="btn btn-outline-danger"/>
 	</div>
 </div>
 </form>

@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
-use App\TypeProduct;
-use App\Http\Resources\Product as TypeProductResource;
-class ProductsController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,17 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        return TypeProductResource::collection(TypeProduct::all());
+        return Product::orderBy('id','DESC')->take(4)->get();
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -27,7 +35,7 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        return TypeProduct::create($request->all());
+        return Product::create($request->all());
     }
 
     /**
@@ -38,7 +46,18 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        return new TypeProductResource(TypeProduct::find($id));
+        return Product::findOrFail($id);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
     }
 
     /**
@@ -50,7 +69,7 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return TypeProduct::find($id)->update($request->all());
+        return Product::findOrFail($id)->update($request->all());
     }
 
     /**
@@ -61,6 +80,6 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        return TypeProduct::find($id)->delete();
+        return Product::findOrFail($id)->delete();
     }
 }

@@ -34,47 +34,49 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
-        $validatedData = $request->validate([
-	        'name' => 'required',
-	        'price' => 'required|numeric',
-            'img0' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-            'img1' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-            'img2' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-	    ]);
+        if(!$request->ajax()){    
+            $validatedData = $request->validate([
+                'name' => 'required',
+                'price' => 'required|numeric',
+                'img0' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+                'img1' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+                'img2' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            ]);
 
 
-        for($i = 0; $i < 3; $i++)
-        {
-            if($request->hasFile('img'.$i.''))
+            for($i = 0; $i < 3; $i++)
             {
-                $image = $request->file('img'.$i.'');
-                $name = $image->getClientOriginalName();
-                $name = Str::random(10);
-                $fullName = $name.'.'.$image->getClientOriginalExtension();
-                $destination = public_path('/image');
-                $image->move($destination,$fullName);
-                $img[$i] = "image/".$fullName;
+                if($request->hasFile('img'.$i.''))
+                {
+                    $image = $request->file('img'.$i.'');
+                    $name = $image->getClientOriginalName();
+                    $name = Str::random(10);
+                    $fullName = $name.'.'.$image->getClientOriginalExtension();
+                    $destination = public_path('/image');
+                    $image->move($destination,$fullName);
+                    $img[$i] = "image/".$fullName;
+                }
+            }
+            
+
+            $add = new Product();
+            $add->MaLoai = $request->optradio;
+            $add->TenSanPham = $request->name;
+            $add->MoTa = $request->mota;
+            $add->Gia = $request->price;
+            $add->HinhAnh = $img[0];
+            $add->HinhCT1 = $img[1];
+            $add->HinhCT2 = $img[2];
+            $add->HangSanXuat = $request->pa;
+            $add->save();
+
+            if(!$add){
+                return  view('show')->withErrors($validatedData);
+            }
+            else{
+                return  view('show')->withErrors('Add Success');
             }
         }
-    	
-
-        $add = new Product();
-        $add->MaLoai = $request->optradio;
-        $add->TenSanPham = $request->name;
-        $add->MoTa = $request->mota;
-        $add->Gia = $request->price;
-        $add->HinhAnh = $img[0];
-        $add->HinhCT1 = $img[1];
-        $add->HinhCT2 = $img[2];
-        $add->HangSanXuat = $request->pa;
-        $add->save();
-
-	    if(!$add){
-	    	return  redirect()->back()->withErrors($validatedData);
-	    }
-	    else{
-	    	return  redirect()->back()->withErrors('Add Success');
-	    }
     }
 
 

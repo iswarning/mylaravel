@@ -58,7 +58,7 @@
             </div>
 
             <div>
-            	<a href="{{url('admin/product/add')}}">Add Products</a>
+            	<a href="{{url('admin/product/add')}}" class='btn btn-outline-success'>Add Product</a>
             </div>
 
             <div style="float: right;">

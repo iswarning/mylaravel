@@ -9,9 +9,9 @@ $(document).ready(function() {
     });
 
     /* Ajax Comments */
-    
+
     @if( Auth::check() && isset($detail))
-    
+
         $('#sendComment').on('click',function(e){
 
             e.preventDefault();
@@ -88,15 +88,8 @@ $(document).ready(function() {
 
     });
 
-    function filter_data()
-    {
-        
-        
-    }
 
-    function get_filter()
 
-    
 });
 
 </script>

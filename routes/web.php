@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/',function(){
+    return view('welcome');
+});
 
 /* Home Page */
 Route::get('/home','HomeController@Home')->name('home');
@@ -47,7 +50,7 @@ Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
 		Route::get('/edit/{id}','Backend\Product\ProductController@show');
 		Route::post('/edit/{id}','Backend\Product\ProductController@update');
 		Route::get('/add','Backend\Product\ProductController@viewStore');
-		Route::post('/add','Backend\Product\ProductController@store');
+		Route::post('/add','Backend\Product\ProductController@store')->name('addProduct');
 		Route::get('/delete/{id}','Backend\Product\ProductController@destroy');
 	});
 	Route::group(['prefix'=>'user'],function(){
