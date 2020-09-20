@@ -5,7 +5,7 @@
         </div>
 
         <div class="panel panel-default">
-            <div class="panel-heading">Create new product</div>
+            <div class="panel-heading"><h4>Create new product</h4></div>
             <div class="panel-body">
                 <form v-on:submit="saveForm()">
                     <div class="row">
@@ -24,6 +24,19 @@
                         <div class="col-xs-12 form-group">
                             <label class="control-label">Product cate</label>
                             <input type="number" v-model="product.MaLoai" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row" v-if='success'>
+                        <div class='alert alert-success'>
+                            {{ success }}
+                        </div>
+                    </div>
+                    <div v-else>
+                        <div class="row"  v-for="error, index in errors">
+                            <div class='alert alert-danger'>
+                                {{ error }}
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -45,7 +58,9 @@
                     TenSanPham: '',
                     Gia: null,
                     MaLoai: null,
-                }
+                },
+                errors: [],
+                success: '',
             }
         },
         methods: {
@@ -55,11 +70,15 @@
                 var newProduct = app.product;
                 axios.post('/api/product', newProduct)
                     .then(function (resp) {
-                        app.$router.push({path: '/'});
+                        if(resp.data == true){
+                            app.success = "Add success";
+                        }else{
+                            app.errors = resp.data;
+                        }
+                        //app.$router.push({path: '/'});
                     })
-                    .catch(function (response) {
-                        console.log(resp.data);
-                        alert("Could not create your product");
+                    .catch(function (err) {
+                        console.log(err);
                     });
             }
         }

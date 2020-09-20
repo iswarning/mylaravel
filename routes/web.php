@@ -12,8 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+/* API */
 Route::get('/',function(){
     return view('welcome');
+});
+Route::get('/user',function(){
+    return view('manageUser');
 });
 
 /* Home Page */

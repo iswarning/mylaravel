@@ -48,17 +48,16 @@
                     app.product = resp.data;
                 })
                 .catch(function () {
-                    alert("Could not load your company")
+                    alert("Could not load your product")
                 });
         },
         data: function () {
             return {
                 productId: null,
                 product: {
-                    name: '',
-                    address: '',
-                    website: '',
-                    email: '',
+                    TenSanPham: '',
+                    Gia: null,
+                    MaLoai: null,
                 }
             }
         },
@@ -67,7 +66,7 @@
                 event.preventDefault();
                 var app = this;
                 var newProduct = app.product;
-                axios.patch('/api/product/' + app.productId, newProduct)
+                axios.put('/api/product/' + app.productId, newProduct)
                     .then(function (resp) {
                         app.$router.replace('/');
                     })

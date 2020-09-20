@@ -91,37 +91,7 @@ $(document).ready(function(){
         }
     });
 
-    /*$("#add-pro").click(function(e){
-        e.preventDefault();
-        
-        var optradio = $("#optradio").val();
-        var name = $("#name").val();
-        var mota = $("#mota").val();
-        var price = $("#price").val();
-        var img0 = $("#img0").val();
-        var img1 = $("#img1").val();
-        var img2 = $("#img2").val();
-        var pa = $("#pa").val();
 
-        $.ajax({
-            url: '{{ route("addProduct") }}',
-            type: 'POST',
-            dataType: 'html',
-            data:{
-                optradio: optradio,
-                name: name,
-                mota: mota,
-                price: price,
-                img0: img0,
-                img1: img1,
-                img2: img2,
-                pa:pa,
-            },
-            success:function(response){
-                $("#showAlert").html(response);
-            }
-        });
-    });*/
 
 });
 

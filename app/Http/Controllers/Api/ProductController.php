@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
+use Illuminate\Support\Facades\Validator;
 class ProductController extends Controller
 {
     /**
@@ -35,7 +36,27 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        return Product::create($request->all());
+        $rules = [
+            'TenSanPham' => 'required',
+            'Gia' => 'required',
+            'MaLoai' => 'required',
+        ];
+
+        $validated = Validator::make($request->all(),$rules);
+
+
+        if($validated->fails())
+        {
+            return response()->json($validated->errors());
+        }
+        else
+        {
+            Product::create($request->all());
+            return true;
+        }
+
+
+
     }
 
     /**

@@ -13,6 +13,7 @@
                         <th>ID</th>
                         <th>Name</th>
                         <th>Price</th>
+                        <th>Image</th>
                         <th>Created_At</th>
                         <th width="100">&nbsp;</th>
                     </tr>
@@ -22,6 +23,7 @@
                         <td>{{ product.id }}</td>
                         <td>{{ product.TenSanPham }}</td>
                         <td>{{ product.Gia }}</td>
+                        <td><img :src='product.HinhAnh' width='40px' height="40px"></td>
                         <td>{{ product.created_at }}</td>
                         <td>
                             <router-link :to="{name: 'editProduct', params: {id: product.id}}" class="btn btn-xs btn-default">
@@ -51,12 +53,12 @@
         mounted() {
             var app = this;
             axios.get('/api/product')
-                .then(function (resp) {
+                .then((resp) =>{
                     app.products = resp.data;
                 })
                 .catch(function (resp) {
                     console.log(resp);
-                    alert("Could not load products");
+                    alert("Could not load product");
                 });
         },
         methods: {
@@ -68,7 +70,7 @@
                             app.products.splice(index, 1);
                         })
                         .catch(function (resp) {
-                            alert("Could not delete company");
+                            alert("Could not delete product");
                         });
                 }
             }
