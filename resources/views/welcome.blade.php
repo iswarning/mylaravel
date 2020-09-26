@@ -2,7 +2,6 @@
 
 <div id='app'>
 
-    <router-view name='productIndex'></router-view>
-    <router-view></router-view>
+    <router-view />
 </div>
 <script src='{{asset('js/app.js')}}'></script>

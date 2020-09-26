@@ -20,28 +20,34 @@ import UserCreate from './components/user/UserCreate.vue';
 import UserEdit from './components/user/UserEdit.vue';
 
 const routes = [
-    {
-        path: '/',
-        components: {
-            productIndex: ProductIndex
-        }
-    },
-    {path: '/create', component: ProductCreate, name: 'createProduct'},
-    {path: '/edit/:id', component: ProductEdit, name: 'editProduct'},
 
     {
+        path: '/',
+        alias: '/product',
+        component: ProductIndex ,
+    },{
         path: '/user',
-        components:{
-            userIndex : UserIndex
-        }
+        component: UserIndex ,
     },
+
+    {path: '/product/create', component: ProductCreate, name: 'createProduct'},
+
+    {path: '/product/edit/:id', component: ProductEdit, name: 'editProduct'},
+
     {path: '/user/create', component: UserCreate, name: 'createUser'},
+
     {path: '/user/edit/:id', component: UserEdit, name: 'editUser'},
+
+
 ];
+
+
 
 const router = new VueRouter({routes});
 
 const app = new Vue({router}).$mount("#app");
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

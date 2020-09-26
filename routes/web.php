@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 /* API */
-Route::get('/',function(){
+Route::get('/product',function(){
     return view('welcome');
 });
 Route::get('/user',function(){

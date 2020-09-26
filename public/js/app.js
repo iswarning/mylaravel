@@ -2324,23 +2324,20 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var _this = this;
-
     axios.get('/api/user').then(function (response) {
-      _this.users = response.data;
+      console.log(response.data);
     })["catch"](function (error) {
       console.log(error);
+      alert("Could not load user");
     });
   },
   methods: {
     deleteEntry: function deleteEntry(id, index) {
-      var _this2 = this;
-
-      if (confirm('Do you want delete ?')) {
-        axios["delete"]('/api/user/' + id).then(function (response) {
-          _this2.users.splice(index, 1);
-        })["catch"](function (error) {
-          console.log(error);
+      if (confirm("Do you really want to delete it?")) {
+        axios["delete"]('/api/user/' + id).then(function (resp) {
+          this.users.splice(index, 1);
+        })["catch"](function (resp) {
+          alert("Could not delete product");
         });
       }
     }
@@ -54018,22 +54015,19 @@ window.Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 var routes = [{
   path: '/',
-  components: {
-    productIndex: _components_product_ProductIndex_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
-  }
+  alias: '/product',
+  component: _components_product_ProductIndex_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
 }, {
-  path: '/create',
+  path: '/user',
+  component: _components_user_UserIndex_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+}, {
+  path: '/product/create',
   component: _components_product_ProductCreate_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
   name: 'createProduct'
 }, {
-  path: '/edit/:id',
+  path: '/product/edit/:id',
   component: _components_product_ProductEdit_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
   name: 'editProduct'
-}, {
-  path: '/user',
-  components: {
-    userIndex: _components_user_UserIndex_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }
 }, {
   path: '/user/create',
   component: _components_user_UserCreate_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
@@ -54323,15 +54317,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************************************!*\
   !*** ./resources/js/components/user/UserCreate.vue ***!
   \*****************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _UserCreate_vue_vue_type_template_id_8d747ee0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserCreate.vue?vue&type=template&id=8d747ee0& */ "./resources/js/components/user/UserCreate.vue?vue&type=template&id=8d747ee0&");
 /* harmony import */ var _UserCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserCreate.vue?vue&type=script&lang=js& */ "./resources/js/components/user/UserCreate.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _UserCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _UserCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -54361,7 +54354,7 @@ component.options.__file = "resources/js/components/user/UserCreate.vue"
 /*!******************************************************************************!*\
   !*** ./resources/js/components/user/UserCreate.vue?vue&type=script&lang=js& ***!
   \******************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

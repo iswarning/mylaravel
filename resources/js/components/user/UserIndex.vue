@@ -52,22 +52,23 @@
         },
         mounted() {
             axios.get('/api/user')
-                .then((response) => {
-                    this.users = response.data;
+                .then(response => {
+                    console.log(response.data);
                 })
-                .catch((error) => {
+                .catch(function (error) {
                     console.log(error);
+                    alert("Could not load user");
                 });
         },
         methods: {
-            deleteEntry(id, index){
-                if(confirm('Do you want delete ?')){
-                    axios.delete('/api/user/'+ id)
-                        .then((response) => {
+            deleteEntry(id, index) {
+                if (confirm("Do you really want to delete it?")) {
+                    axios.delete('/api/user/' + id)
+                        .then(function (resp) {
                             this.users.splice(index, 1);
                         })
-                        .catch((error) => {
-                            console.log(error);
+                        .catch(function (resp) {
+                            alert("Could not delete product");
                         });
                 }
             }
