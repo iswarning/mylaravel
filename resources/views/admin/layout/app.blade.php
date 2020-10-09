@@ -10,154 +10,165 @@
 	  <meta name="author" content="">
 	  <title>SB Admin - Start Bootstrap Template</title>
 	  <!-- Bootstrap core CSS-->
-	  <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+	  <link href="{{ url('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 	  <!-- Custom fonts for this template-->
-	  <link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+	  <link href="{{ url('vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
 	  <!-- Page level plugin CSS-->
-	  <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
+	  <link href="{{ url('vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
 	  <!-- Custom styles for this template-->
-	  <link href="{{ asset('css/sb-admin.css')}}" rel="stylesheet">
+	  <link href="{{ url('css/sb-admin.css')}}" rel="stylesheet">
     <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
-</head>
+    <link href="{{ mix('css/app.css')}}" rel="stylesheet">
+    <base href="{{url('/')}}">
+  </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="{{route('home')}}">Back Home</a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="{{asset('admin/dashboard')}}">
-            <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text"> Dashboard </span>
-          </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý về sản phẩm">
-          <a class="nav-link" href="{{asset('admin/dashboard')}}">
-            <i class="fa fa-fw fa-wrench"></i>
-            <span class="nav-link-text"> Products </span>
-          </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý loại sản phẩm">
-          <a class="nav-link" href="#">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text"> Category </span>
-          </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý đơn hàng">
-          <a class="nav-link" href="{{asset('admin/order')}}">
-            <i class="fa fa-fw fa-university"></i>
-            <span class="nav-link-text"> Order </span>
-          </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý đơn hàng">
-          <a class="nav-link" href="{{asset('admin/orderdetail')}}">
-            <i class="fa fa-fw fa-university"></i>
-            <span class="nav-link-text"> Order Detail </span>
-          </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý tài khoản">
-          <a class="nav-link" href="{{asset('admin/user')}}">
-            <i class="fa fa-fw fa-user"></i>
-            <span class="nav-link-text"> Users </span>
-          </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý bình luận">
-          <a class="nav-link" href="{{asset('admin/comment')}}">
-            <i class="fa fa-fw fa-user"></i>
-            <span class="nav-link-text"> Comments </span>
-          </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý bình luận">
-            <a class="nav-link" href="{{url('admin/notification/list')}}">
-              <i class="fa fa-fw fa-user"></i>
-              <span class="nav-link-text"> Notifications </span>
+<div id='app'>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+      <a class="navbar-brand" href="{{route('home')}}">Back Home</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+            <a class="nav-link" href="{{url('admin/products')}}">
+              <i class="fa fa-fw fa-dashboard"></i>
+              <span class="nav-link-text"> Dashboard </span>
             </a>
           </li>
-      </ul>
-      <ul class="navbar-nav sidenav-toggler">
-        <li class="nav-item">
-          <a class="nav-link text-center" id="sidenavToggler">
-            <i class="fa fa-fw fa-angle-left"></i>
-          </a>
-        </li>
-      </ul>
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-fw fa-bell"></i>
-            <span class="d-lg-none">Alerts
-              <span class="badge badge-pill badge-warning">6 New</span>
-            </span>
-            <span class="indicator text-warning d-none d-lg-block">
-              <i class="fa fa-fw fa-circle"></i>
-            </span>
-          </a>
-          <div class="dropdown-menu menu-notification" aria-labelledby="alertsDropdown">
-            <h6 class="dropdown-header">New Alerts:</h6>
-
-            <!-- Show Notifications -->
-            <div class="new-notification"></div>
-            @foreach(Auth::user()->notifications->take(5) as $notification)
-            <div class='old-notification'>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">
-                <span class="text-success">
-                    <strong>
-                    {{ $notification->data['title'] }}
-                    </strong>
-                </span>
-                <span class="small float-right text-muted">{{ Carbon\Carbon::parse($notification->created_at)->diffForHumans()}}</span>
-                <div class="dropdown-message large" style="width:300px;">{{ $notification->data['content'] }}</div>
-                </a>
-            </div>
-            @endforeach
-
-
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item small" href="#">View all alerts</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <form class="form-inline my-2 my-lg-0 mr-lg-2">
-            <div class="input-group">
-              <input class="form-control" type="text" placeholder="Search for...">
-              <span class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fa fa-search"></i>
-                </button>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý về sản phẩm">
+            <a class="nav-link" href="{{url('admin/products')}}">
+              <i class="fa fa-fw fa-wrench"></i>
+              <span class="nav-link-text"> Products </span>
+            </a>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý loại sản phẩm">
+            <a class="nav-link" href="#">
+              <i class="fa fa-fw fa-table"></i>
+              <span class="nav-link-text"> Category </span>
+            </a>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý đơn hàng">
+            <a class="nav-link" href="{{url('admin/order')}}">
+              <i class="fa fa-fw fa-university"></i>
+              <span class="nav-link-text"> Order </span>
+            </a>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý đơn hàng">
+            <a class="nav-link" href="{{url('admin/orderdetail')}}">
+              <i class="fa fa-fw fa-university"></i>
+              <span class="nav-link-text"> Order Detail </span>
+            </a>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý tài khoản">
+            <a class="nav-link" href="{{url('admin/users')}}">
+              <i class="fa fa-fw fa-user"></i>
+              <span class="nav-link-text"> Users </span>
+            </a>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý article">
+            <a class="nav-link" href="{{url('admin/posts')}}">
+              <i class="fa fa-fw fa-user"></i>
+              <span class="nav-link-text"> Posts </span>
+            </a>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý bình luận">
+            <a class="nav-link" href="{{url('admin/comment')}}">
+              <i class="fa fa-fw fa-user"></i>
+              <span class="nav-link-text"> Comments </span>
+            </a>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý bình luận">
+              <a class="nav-link" href="{{url('admin/notification/list')}}">
+                <i class="fa fa-fw fa-user"></i>
+                <span class="nav-link-text"> Notifications </span>
+              </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav sidenav-toggler">
+          <li class="nav-item">
+            <a class="nav-link text-center" id="sidenavToggler">
+              <i class="fa fa-fw fa-angle-left"></i>
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-fw fa-bell"></i>
+              <span class="d-lg-none">Alerts
+                <span class="badge badge-pill badge-warning">6 New</span>
               </span>
+              <span class="indicator text-warning d-none d-lg-block">
+                <i class="fa fa-fw fa-circle"></i>
+              </span>
+            </a>
+            <div class="dropdown-menu menu-notification" aria-labelledby="alertsDropdown">
+              <h6 class="dropdown-header">New Alerts:</h6>
+
+              <!-- Show Notifications -->
+              <div class="new-notification"></div>
+              @foreach(Auth::user()->notifications->take(5) as $notification)
+              <div class='old-notification'>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">
+                  <span class="text-success">
+                      <strong>
+                      {{ $notification->data['title'] }}
+                      </strong>
+                  </span>
+                  <span class="small float-right text-muted">{{ Carbon\Carbon::parse($notification->created_at)->diffForHumans()}}</span>
+                  <div class="dropdown-message large" style="width:300px;">{{ $notification->data['content'] }}</div>
+                  </a>
+              </div>
+              @endforeach
+
+
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item small" href="#">View all alerts</a>
             </div>
-          </form>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{asset('logout')}}">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
-        </li>
-      </ul>
-    </div>
-</nav>
+          </li>
+          <li class="nav-item">
+            <form class="form-inline my-2 my-lg-0 mr-lg-2">
+              <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for...">
+                <span class="input-group-append">
+                  <button class="btn btn-primary" type="button">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </span>
+              </div>
+            </form>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url('logout')}}">
+              <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+          </li>
+        </ul>
+      </div>
+  </nav>
 
 	@yield('content')
 
-
+</div>
+  <script src="{{ mix('js/app.js') }}"></script>
 	<!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- Core plugin JavaScript-->
-    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <script src="{{ url('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
     <!-- Page level plugin JavaScript-->
-    <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
-    <script src="{{ asset('vendor/datatables/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.js') }}"></script>
+    <script src="{{ url('vendor/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ url('vendor/datatables/jquery.dataTables.js') }}"></script>
+    <script src="{{ url('vendor/datatables/dataTables.bootstrap4.js') }}"></script>
     <!-- Custom scripts for all pages-->
-    <script src="{{ asset('js/sb-admin.min.js') }}"></script>
+    <script src="{{ url('js/sb-admin.min.js') }}"></script>
     <!-- Custom scripts for this page-->
-    <script src="{{ asset('js/sb-admin-datatables.min.js') }}"></script>
-    <script src="{{ asset('js/sb-admin-charts.min.js') }}"></script>
+    <script src="{{ url('js/sb-admin-datatables.min.js') }}"></script>
+    <script src="{{ url('js/sb-admin-charts.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 

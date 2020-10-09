@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
-class UserController extends Controller
+use App\Post;
+
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::orderBy('id','DESC')->take(5)->get();
+        return Post::all();
     }
 
     /**
@@ -24,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -35,20 +36,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|unique:users|email',
-            'password' => 'required|min:6',
+            'title' => 'required|min:3',
+            'content' => 'required|min:6'
         ]);
 
-        User::create([
-          'name' => $request->name,
-          'email' => $request->email,
-          'password' => bcrypt($request->password),
-          'role' => $request->role
-        ]);
-        return response()->json(['message' => 'Add Success !'], 201);
+        Post::create($request->all());
+
+        return response()->json(['message' => 'Add success'], 200);
+        
     }
 
     /**
@@ -59,7 +55,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return User::findOrFail($id);
+        try {
+            $data = Post::findOrFail($id);
+        } catch(\Exception $e) {
+            dd($e->getMessage());
+        }
+        return response()->json($data);
     }
 
     /**
@@ -70,7 +71,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -82,12 +83,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        User::findOrFail($id)->update([
-          'name' => $request->name,
-          'email' => $request->email,
-          'role' => $request->role
-        ]);
-        return response()->json(['message' => 'Updated Success !'], 201);
+        try {
+
+            Post::findOrFail($id)->update($request->all());
+
+            return response()->json(['message' => 'Updated success']);
+        } catch(\Exception $e) {
+            dd($e->getMessage());
+        }
     }
 
     /**
@@ -98,6 +101,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::findOrFail($id)->delete();
+      return  Post::findOrFail($id)->delete();
     }
 }

@@ -9,4 +9,14 @@ class Comment extends Model
 	public $timestamps = true;
     protected $table = 'comment';
     protected $fillable = ['content','reply'];
+
+    public function post()
+    {
+        return $this->belongsTo('App\Post', 'post_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User','user_id');
+    }
 }

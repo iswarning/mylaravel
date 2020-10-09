@@ -25,7 +25,7 @@ class LoginController extends Controller
     	if(Auth::attempt($log))
     	{
             if(Auth::user()->role === 1)
-                return redirect('admin/dashboard');
+                return redirect('admin/products');
             else
                 return redirect('home');
     	}
@@ -62,7 +62,7 @@ class LoginController extends Controller
         $register = new User();
         $register->name = $request->text;
         $register->email = $request->email;
-        $register->password = Hash::make($request->password);
+        $register->password = bcrypt($request->password);
         $register->role = 2;
         $register->save();
 

@@ -22,3 +22,9 @@ Route::apiResource('product','Api\ProductController');
 
 Route::apiResource('user','Api\UserController');
 
+Route::apiResource('post','Api\PostController');
+
+Route::apiResource('type-post','Api\TypePostController');
+
+Route::apiResource('type-product','Api\TypeProductController');
+

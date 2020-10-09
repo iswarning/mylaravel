@@ -8,7 +8,7 @@ class Product extends Model
 {
     protected $table = 'SANPHAM';
 
-    protected $fillable = ['MaLoai','Gia','Instock','MoTa','TenSanPham'];
+    protected $guarded = [];
 
     public function introduction(){
         $this->hasMany('App\Introduction');

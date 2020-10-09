@@ -5,102 +5,96 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use App\Services\DecodeImageService;
+
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-        return Product::orderBy('id','DESC')->take(4)->get();
+        return Product::orderBy('id','desc')->take(5)->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $rules = [
+        
+        $request->validate([
             'TenSanPham' => 'required',
-            'Gia' => 'required',
-            'MaLoai' => 'required',
-        ];
+            'Gia' => 'required|numeric',
+            'MoTa' => 'required',
+            'HinhAnh' => 'required',
+            'HinhCT1' => 'required',
+            'HinhCT2' => 'required',
+            'HangSanXuat' => 'required'
+        ]);
 
-        $validated = Validator::make($request->all(),$rules);
+        $newImage0 = new DecodeImageService($request->HinhAnh);
+        $HinhAnh = $newImage0->process();
 
+        $newImage1 = new DecodeImageService($request->HinhCT1);
+        $HinhCT1 = $newImage1->process();
 
-        if($validated->fails())
-        {
-            return response()->json($validated->errors());
-        }
-        else
-        {
-            Product::create($request->all());
-            return true;
-        }
+        $newImage2 = new DecodeImageService($request->HinhCT2);
+        $HinhCT2 = $newImage2->process();
 
+        Product::create([
+            'TenSanPham' => $request->TenSanPham,
+            'Gia' => $request->Gia,
+            'MoTa' => $request->MoTa,
+            'MaLoai' => $request->MaLoai,
+            'HangSanXuat' => $request->HangSanXuat,
+            'HinhAnh' => $HinhAnh,
+            'HinhCT1' => $HinhCT1,
+            'HinhCT2' => $HinhCT2
+        ]);
 
-
+        return response()->json(['message' => 'Add success'], 200);
+        
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        return Product::findOrFail($id);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        return Product::findOrFail($id)->update($request->all());
+
+        $files[0] = $request->HinhAnh;
+        $files[1] = $request->HinhCT1;
+        $files[2] = $request->HinhCT2;
+
+        $products = Product::find($id);
+
+        $items[0] = $products->HinhAnh;
+        $items[1] = $products->HinhCT1;
+        $items[2] = $products->HinhCT2;
+        
+        for($i = 0; $i < count($files); $i++)
+        {
+            if($files[$i] != $items[$i])
+            {
+                $newImage[$i] = new DecodeImageService($files[$i]);
+                $url[$i] = $newImage[$i]->process();
+            }
+            else
+            {
+                $url[$i] = $items[$i];
+            }
+        }
+
+        Product::find($id)->update([
+            'TenSanPham' => $request->TenSanPham,
+            'Gia' => $request->Gia,
+            'MoTa' => $request->MoTa,
+            'MaLoai' => $request->MaLoai,
+            'HangSanXuat' => $request->HangSanXuat,
+            'HinhAnh' => $url[0],
+            'HinhCT1' => $url[1],
+            'HinhCT2' => $url[2]
+        ]);
+
+        return response()->json(['message' => 'Updated success']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        return Product::findOrFail($id)->delete();
+      return  Product::findOrFail($id)->delete();
     }
 }

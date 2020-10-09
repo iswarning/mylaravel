@@ -48,23 +48,13 @@ Route::post('register','LoginController@postRegister');
 
 /* Admin System */
 Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
-	Route::get('dashboard','Backend\Product\ProductController@index');
-	Route::group(['prefix'=>'product'],function(){
-		Route::get('/list','Backend\Product\ProductController@index');
-		Route::get('/edit/{id}','Backend\Product\ProductController@show');
-		Route::post('/edit/{id}','Backend\Product\ProductController@update');
-		Route::get('/add','Backend\Product\ProductController@viewStore');
-		Route::post('/add','Backend\Product\ProductController@store')->name('addProduct');
-		Route::get('/delete/{id}','Backend\Product\ProductController@destroy');
-	});
-	Route::group(['prefix'=>'user'],function(){
-		Route::get('/','Backend\User\UserController@index');
-		Route::get('/edit/{id}','Backend\User\UserController@show');
-		Route::post('/edit/{id}','Backend\User\UserController@update');
-		Route::get('/add','Backend\User\UserController@viewStore');
-		Route::post('/add','Backend\User\UserController@store');
-		Route::get('/delete/{id}','Backend\User\UserController@destroy');
-	});
+
+	Route::get('/products',function(){ return view('admin.product.products'); });
+
+	Route::get('/users',function(){ return view('admin.user.users'); });
+
+	Route::get('/posts',function(){ return view('admin.post.posts'); });
+
 	Route::group(['prefix'=>'comment'],function(){
 		Route::get('/','Backend\Comment\CommentController@index');
 		Route::get('/delete/{id}','Backend\Comment\CommentController@destroy');
