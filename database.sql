@@ -1245,7 +1245,7 @@ CREATE TABLE `password_resets` (
 -- Cấu trúc bảng cho bảng `sanpham`
 --
 
-CREATE TABLE `sanpham` (
+CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `MaLoai` int(11) NOT NULL,
   `TenSanPham` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -1264,7 +1264,7 @@ CREATE TABLE `sanpham` (
 -- Đang đổ dữ liệu cho bảng `sanpham`
 --
 
-INSERT INTO `sanpham` (`id`, `MaLoai`, `TenSanPham`, `MoTa`, `Gia`, `HinhAnh`, `HinhCT1`, `HinhCT2`, `HangSanXuat`, `Instock`, `created_at`, `updated_at`) VALUES
+INSERT INTO `product` (`id`, `MaLoai`, `TenSanPham`, `MoTa`, `Gia`, `HinhAnh`, `HinhCT1`, `HinhCT2`, `HangSanXuat`, `Instock`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Điện Thoại iPhone X', 'iPhone X được Apple ra mắt ngày 12/9 vừa rồi đánh dấu chặng đường 10 năm lần đầu tiên iPhone ra đời. Sau một thời gian, giá iPhone X cũng được công bố. iPhone X mang trên mình thiết kế hoàn toàn mới với màn hình Super Retina viền cực mỏng và trang bị nhiều công nghệ hiện đại như nhận diện khuôn mặt Face ID, sạc pin nhanh và sạc không dây cùng khả năng chống nước bụi cao cấp.', 34790000, 'image/x.png', 'image/x_item1.png', 'image/x_item2.png', 'Apple', 0, '2020-08-18 04:49:54', '2020-08-20 05:31:01'),
 (2, 1, 'Điện Thoại Vivo V9', 'Vivo V9 là chiếc smartphone tầm trung cận cao cấp với điểm nhấn là máy có camera kép phía sau và camera selfie độ phân giải cao 24 MP.Cũng giống như ZenFone 5, OPPO R15 hay Huawei P20, chiếc smartphone này của Vivo cũng dõi theo xu hướng thiết kế notch (hay còn gọi là tai thỏ) như trên chiếc iPhone X của Apple.sss', 7990000, 'image/v9.png', 'image/v9_item1.png', 'image/v9_item.jpg', 'Vivo', 2, '2020-08-18 04:49:54', '2020-09-10 07:05:48'),
 (3, 1, 'Samsung Galaxy A6', 'Samsung Galaxy A6 (2018) là chiếc smartphone tầm trung vừa được ra mắt của Samsung bên cạnh chiếc Samsung Galaxy A6+ (2018).Thiết kế quen thuộcMáy được hoàn thiện từ kim loại nguyên khối, kết hợp với mặt kính cong nhẹ 2.5D cho cảm giác vuốt chạm thoải mái hơn.Mặt trước là camera \"tự sướng\" và đèn LED trợ sáng 3 cấp độ giúp chụp ảnh selfie trong điều kiện thiếu sáng tốt hơn.Mặt lưng là dãy ăng-ten trên dưới đối xứng hình chữ U và camera chính và cảm biến vân tay được gom chung vào 1 cụm.', 6990000, 'image/a6.png', 'image/a6_item1.png', 'image/a6_item2.png', 'Samsung', 34, '2020-08-18 04:49:54', '2020-09-10 06:53:53'),
@@ -1876,7 +1876,7 @@ ALTER TABLE `password_resets`
 --
 -- Chỉ mục cho bảng `sanpham`
 --
-ALTER TABLE `sanpham`
+ALTER TABLE `product`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1983,7 +1983,7 @@ ALTER TABLE `orderproduct`
 --
 -- AUTO_INCREMENT cho bảng `sanpham`
 --
-ALTER TABLE `sanpham`
+ALTER TABLE `product`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
