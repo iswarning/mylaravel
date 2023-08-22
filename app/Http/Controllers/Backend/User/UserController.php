@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Backend\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
-use Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     
@@ -85,10 +86,10 @@ class UserController extends Controller
     	]);
 
     	if($data){
-    		return Redirect::back()->withErorrs('Update Success !');
+    		return back()->withErorrs('Update Success !');
     	}
     	else{
-    		return Redirect::back()->withErorrs($validator);
+    		return back()->withErorrs($validator);
     	}
     }
 

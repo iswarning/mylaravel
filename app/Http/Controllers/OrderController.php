@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\OrderProduct;
 use App\Order;
 use Illuminate\Support\Facades\DB;
-use Cart;
 use App\Product;
+use Gloudemans\Shoppingcart\Facades\Cart;
 class OrderController extends Controller
 {
 	public function index()

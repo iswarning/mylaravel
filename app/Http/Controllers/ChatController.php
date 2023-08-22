@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Message;
-use Auth;
 use App\Events\ChatEvent;
 use Pusher\Pusher;
 use App\TypeProduct;
+use Illuminate\Support\Facades\Auth;
 class ChatController extends Controller
 {
     public function __construct(){

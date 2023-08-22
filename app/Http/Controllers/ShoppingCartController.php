@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
 use App\Product;
-use Session;
-use Cart;
 use App\OrderProduct;
 use App\Order;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Auth;
 class ShoppingCartController extends Controller
 {
     public function index()

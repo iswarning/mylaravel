@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
-use Hash, Socialite;
-use DB;
-use Pusher\Pusher;
-use App\Notifications\TestNotification;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\DB;
 class LoginController extends Controller
 {
 
@@ -103,7 +101,7 @@ class LoginController extends Controller
             $user->save();
 
             /* Thông báo tạo user mới */
-            app('App\Http\Controllers\Backend\Notification\SendNotification')->store('New '.$provider.' Users',$last_user->email);
+            // app('App\Http\Controllers\Backend\Notification\SendNotification')->store('New '.$provider.' Users',$last_user->email);
         }
         return $user;
     }
